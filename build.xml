@@ -2,7 +2,6 @@
     <property environment="env"/>
 
     <property name="deploy.dir" value="/home/thomis/Downloads/wildfly-10/standalone/deployments"/>
-    <property name="perso.dir" value="D:/JASON/programmes/java/Espoir EJB/S5 p16/myStationRoot/build-file/lib"/>
 
     <property name="station-warname" value="station.war"/>
     <property name="station-jarname" value="station-ejb.jar"/>
