@@ -1,0 +1,5 @@
+# Ignore the build directory
+build-file/
+
+# Ignore the build.xml file
+build.xml
