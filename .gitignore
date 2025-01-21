@@ -1,3 +1,4 @@
 build.xml
 build-file/
 station-war/web/dateBuild.txt
+.vscode/
