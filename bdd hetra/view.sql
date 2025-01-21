@@ -1,8 +1,8 @@
-CREATE VIEW arrondissement_polygone AS
+CREATE OR REPLACE VIEW arrondissement_polygone AS
 SELECT 
     a.id_arrondissement,
     a.nom,
-    LISTAGG(ap.latitude || ' ' || ap.longitude, ', ') WITHIN GROUP (ORDER BY ap.id_arrondissement) AS polygon
+    LISTAGG(ap.position.SDO_POINT.Y || ' ' || ap.position.SDO_POINT.X, ', ') WITHIN GROUP (ORDER BY ap.id_arrondissement) AS polygon
 FROM 
     arrondissement a
 JOIN 
