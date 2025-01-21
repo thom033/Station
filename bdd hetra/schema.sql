@@ -9,15 +9,13 @@ CREATE TABLE type_rindrina (
     nom VARCHAR2(100),
     coefficient NUMBER
 );
-
 CREATE TABLE maison (
     id NUMBER PRIMARY KEY,
     nom VARCHAR2(100),
     longeur NUMBER,
     largeur NUMBER,
     nbr_etage NUMBER,
-    longitude NUMBER,
-    latitude NUMBER
+    position SDO_GEOMETRY
 );
 
 CREATE TABLE maison_detaills (
@@ -37,8 +35,7 @@ CREATE TABLE arrondissement (
 
 CREATE TABLE arrondissement_position (
     id_arrondissement NUMBER,
-    latitude NUMBER,
-    longitude NUMBER,
+    position SDO_GEOMETRY,
     FOREIGN KEY (id_arrondissement) REFERENCES arrondissement(id_arrondissement)
 );
 
