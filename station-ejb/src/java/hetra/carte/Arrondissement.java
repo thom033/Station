@@ -1,12 +1,15 @@
 package hetra.carte;
 
+import java.util.List;
+
 import bean.ClassMAPTable;
 
 public class Arrondissement extends ClassMAPTable {
     String id_arrondissement, nom;
     double total_paye;
     double total_reste;
-
+    List<String> position_polygone;
+    
     public String getId_arrondissement() {
         return id_arrondissement;
     }
