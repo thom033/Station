@@ -93,82 +93,82 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+    // Initialiser la carte
+    const map = L.map('map').setView([-18.8792, 47.5079], 13);
 
-        let maisons = [];
-        // Initialiser la carte
-        const map = L.map('map').setView([-18.8792, 47.5079], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+    // Couche pour les marqueurs
+    const markersLayer = L.layerGroup().addTo(map);
 
+    // Ajouter un marqueur pour une maison
+    function addMaisonMarker(maison) {
+        L.marker([maison.latitude, maison.longitude])
+            .addTo(markersLayer)
+            .bindPopup("<b>Nom:</b> " + maison.nom + "<br> <b>Etages:</b> " + maison.etage + "<br> <b>Largeur:</b> " + maison.largeur + " m<br> <b>Longueur:</b> " + maison.longueur + " m");
+    }
 
-        // Ajouter des marqueurs pour chaque maison
-        
-        function addMaisonMarker(maison) {
-            L.marker([maison.latitude, maison.longitude])
-                .addTo(markersLayer)
-                .bindPopup("<b>Nom:</b> " + maison.nom + "<br> <b>Etages:</b> " + maison.nbrEtage + "<br> <b>Largeur:</b> " + maison.largeur + " m<br> <b>Longueur:</b> " + maison.longueur + " m");
-        }
-       
-        // Charger les données des maisons
-        function refreshMaisons() {
-            fetch('http://localhost:8080/station/carte') // URL de votre API
+    // Charger les données des maisons
+    function refreshMaisons() {
+        fetch('http://localhost:8080/station/maisons') // URL de votre API
             .then(response => response.json())
             .then(data => {
                 // Efface les anciens marqueurs
                 markersLayer.clearLayers();
-                maisons = data;
+
                 // Ajoute les nouveaux marqueurs
-                maisons.forEach(maison => {
+                data.forEach(maison => {
                     addMaisonMarker(maison);
                 });
             })
             .catch(error => console.error('Erreur lors du chargement des maisons :', error));
+    }
+
+    // Charger les types de données
+    async function loadTypeData() {
+        try {
+            const response = await fetch('http://localhost:8080/station/data');
+            const data = await response.json();
+
+            const tafoSelect = document.getElementById('typeTafo');
+            const rindrinaSelect = document.getElementById('typeRindrina');
+
+            data.typeTafoList.forEach(tafo => {
+                const option = document.createElement('option');
+                option.value = tafo.id_type_tafo;
+                option.textContent = tafo.nom;
+                tafoSelect.appendChild(option);
+            });
+
+            data.typeRindrinaList.forEach(rindrina => {
+                const option = document.createElement('option');
+                option.value = rindrina.id_type_rindrina;
+                option.textContent = rindrina.nom;
+                rindrinaSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Erreur lors du chargement des types :', error);
         }
+    }
 
-        // Ouvrir le formulaire d'insertion
-        map.on('click', e => {
-            document.getElementById('latitude').value = e.latlng.lat.toFixed(6);
-            document.getElementById('longitude').value = e.latlng.lng.toFixed(6);
-            const modal = new bootstrap.Modal(document.getElementById('houseDetailsModal'));
-            modal.show();
-        });
+    // Charger les données dès le chargement de la page
+    document.addEventListener('DOMContentLoaded', () => {
+        refreshMaisons(); // Charge les maisons
+        loadTypeData();   // Charge les types
+    });
 
-        // Charger les types de données
-        async function loadTypeData() {
-            try {
-                const response = await fetch('http://localhost:8080/station/data');
-                const data = await response.json();
+    // Ouvrir le formulaire d'insertion
+    map.on('click', e => {
+        document.getElementById('latitude').value = e.latlng.lat.toFixed(6);
+        document.getElementById('longitude').value = e.latlng.lng.toFixed(6);
+        const modal = new bootstrap.Modal(document.getElementById('houseDetailsModal'));
+        modal.show();
+    });
 
-                const tafoSelect = document.getElementById('typeTafo');
-                const rindrinaSelect = document.getElementById('typeRindrina');
-
-                data.typeTafoList.forEach(tafo => {
-                    const option = document.createElement('option');
-                    option.value = tafo.id_type_tafo;
-                    option.textContent = tafo.nom;
-                    tafoSelect.appendChild(option);
-                });
-
-                data.typeRindrinaList.forEach(rindrina => {
-                    const option = document.createElement('option');
-                    option.value = rindrina.id_type_rindrina;
-                    option.textContent = rindrina.nom;
-                    rindrinaSelect.appendChild(option);
-                });
-                
-            } catch (error) {
-                console.error("Erreur lors du chargement des types :", error);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            refreshMaisons();
-            loadTypeData();
-        });
-
+    // Soumettre le formulaire pour ajouter une maison
     function submitForm() {
         const houseData = {
             nom: document.getElementById('houseName').value,
@@ -188,24 +188,21 @@
             },
             body: JSON.stringify(houseData)
         })
-        .then(response => {
-            if (response.ok) {
-                alert('Maison ajoutée avec succès!');
-                // Masquer la modal après la soumission
-                const modal = bootstrap.Modal.getInstance(document.getElementById('houseDetailsModal'));
-                modal.hide();
-
-                // Réinitialiser le formulaire
-                document.getElementById('houseForm').reset();
-                refreshMaisons();
-            } else {
-                alert('Erreur lors de l\'ajout de la maison.');
-            }
-        })
-        .catch(error => console.error('Erreur:', error));
+            .then(response => {
+                if (response.ok) {
+                    alert('Maison ajoutée avec succès!');
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('houseDetailsModal'));
+                    modal.hide();
+                    document.getElementById('houseForm').reset();
+                    refreshMaisons(); // Recharge les maisons après l'ajout
+                } else {
+                    alert('Erreur lors de l\'ajout de la maison.');
+                }
+            })
+            .catch(error => console.error('Erreur :', error));
     }
+</script>
 
-    </script>
 </body>
 
 </html>
