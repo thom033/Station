@@ -1,0 +1,22 @@
+docker start 15c4f4234cdb
+
+docker logs -f 15c4f4234cdb
+
+
+docker exec -it oracle-xe-11g bash
+
+
+java -version
+
+
+update-alternatives --list java
+
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
+
+echo $JAVA_HOME
+java -version
+
+
+

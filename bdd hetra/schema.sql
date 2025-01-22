@@ -19,6 +19,8 @@ CREATE TABLE maison (
     position SDO_GEOMETRY
 );
 
+
+
 CREATE TABLE maison_detaills (
     id_maison_detaills VARCHAR2(50) PRIMARY KEY,
     id_maison VARCHAR2(50),
@@ -45,7 +47,7 @@ CREATE TABLE paiement (
     id_maison VARCHAR2(50),
     mois NUMBER, 
     annee NUMBER,
-    dates DATE,
+    date_paiement DATE,
     FOREIGN KEY (id_maison) REFERENCES maison(id)
 );
 
