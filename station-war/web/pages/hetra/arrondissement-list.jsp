@@ -32,18 +32,13 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Exemple de données statiques -->
-                <tr>
-                    <td>Arrondissement 1</td>
-                    <td>1000</td>
-                    <td>500</td>
-                </tr>
-                <tr>
-                    <td>Arrondissement 2</td>
-                    <td>1500</td>
-                    <td>300</td>
-                </tr>
-                <!-- Ajoutez ici les autres lignes dynamiquement avec un langage côté serveur -->
+                <c:forEach var="arrondissement" items="${arrondissements}">
+                    <tr>
+                        <td>${arrondissement.nom}</td>
+                        <td>${arrondissement.total_paye}</td>
+                        <td>${arrondissement.total_rest</td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
     </div>
