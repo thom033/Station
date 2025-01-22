@@ -172,7 +172,6 @@ public class Maison extends ClassMere {
         } catch (Exception e) {
             throw new Exception("Erreur lors de la récupération des maisons : " + e.getMessage(), e);
         }
-    
         return maisons;
     }
     

@@ -204,8 +204,7 @@
         function viewArrondissements() {
             alert("Affichage de la liste des arrondissements (fonctionnalité à implémenter).");
         }
-    </script>
-    <script>
+        
         async function loadTypeData() {
             try {
                 console.log('Chargement des données...');
@@ -224,7 +223,7 @@
 
                 data.typeTafoList.forEach(tafo => {
                     const option = document.createElement('option');
-                    console.log(tafo);
+                    // console.log(tafo); --%>
                     option.value = tafo.id_type_tafo;
                     option.textContent = tafo.nom;
                     tafoSelect.appendChild(option);
@@ -233,7 +232,7 @@
                 data.typeRindrinaList.forEach(rindrina => {
                     const option = document.createElement('option');
                     option.value = rindrina.id_type_rindrina;
-                                        console.log(rindrina);
+                                       // console.log(rindrina);
                     option.textContent = rindrina.nom;
                     rindrinaSelect.appendChild(option);
                 });
