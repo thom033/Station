@@ -2,7 +2,7 @@ package hetra.trano;
 
 import java.sql.Connection;
 
-import bean.ClassMere;
+import bean.ClassMAPTable;
 
 public class TypeRindrina extends ClassMAPTable{
     String id,nom;
