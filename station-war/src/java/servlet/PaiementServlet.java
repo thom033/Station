@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import bean.CGenUtil;
-
+import hetra.trano.CalculHetraMaison;
 import hetra.paiement.Paiement;
 
 @WebServlet("/paiement")
@@ -21,7 +21,9 @@ public class PaiementServlet extends HttpServlet {
 
         try {
             Paiement[] listePaiements = (Paiement[]) CGenUtil.rechercher(new Paiement(), null, null, "");
+            CalculHetraMaison[] listeCalculHetraMaison = (CalculHetraMaison[]) CGenUtil.rechercher(new CalculHetraMaison(), null, null, "");
             System.out.println(listePaiements.length);
+            System.out.println(listeCalculHetraMaison.length);
 
         } catch (Exception e) {
             e.printStackTrace();
