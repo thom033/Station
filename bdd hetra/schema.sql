@@ -18,6 +18,30 @@ CREATE TABLE maison (
     nbr_etage NUMBER,
     position SDO_GEOMETRY
 );
+ALTER TABLE maison
+ADD (
+    latitude NUMBER,
+    longitude NUMBER
+);
+
+CREATE OR REPLACE TRIGGER update_lat_long_after_insert
+AFTER INSERT ON maison
+FOR EACH ROW
+BEGIN
+    -- Vérifie si le type SDO_GEOMETRY est non nul
+    IF :NEW.position IS NOT NULL THEN
+        -- Extraction des coordonnées x (longitude) et y (latitude) du type SDO_GEOMETRY
+        :NEW.latitude := :NEW.position.SDO_POINT.X;
+        :NEW.longitude := :NEW.position.SDO_POINT.Y;
+        
+        -- Mise à jour des colonnes latitude et longitude
+        UPDATE maison
+        SET latitude = :NEW.latitude,
+            longitude = :NEW.longitude
+        WHERE id = :NEW.id;
+    END IF;
+END;
+/
 
 
 
