@@ -33,11 +33,11 @@ JOIN
 
 CREATE OR REPLACE VIEW calcul_hetra_paiement AS
 SELECT 
-    chm.id_maison,
-    chm.nom_maison,
-    chm.hetra,
-    p.mois,
-    p.annee,
+    chm.id_maison AS id_maison,
+    chm.nom_maison AS nom_maison,
+    chm.hetra AS hetra,
+    p.mois AS mois,
+    p.annee AS annee,
     p.date_paiement AS date_paiement
 FROM 
     calcul_hetra_maison chm
@@ -47,11 +47,11 @@ LEFT JOIN
 CREATE OR REPLACE VIEW sum_hetra_maison AS
 WITH all_months AS (
     SELECT 
-        chm.id_maison,
-        chm.nom_maison,
-        chm.hetra,
-        m.mois,
-        y.annee
+        chm.id_maison AS id_maison,
+        chm.nom_maison AS nom_maison,
+        chm.hetra AS hetra,
+        m.mois AS mois,
+        y.annee AS annee
     FROM 
         calcul_hetra_maison chm,
         (SELECT LEVEL AS mois FROM dual CONNECT BY LEVEL <= 12) m,
