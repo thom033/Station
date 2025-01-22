@@ -84,6 +84,10 @@ public class Maison extends ClassMere {
         this.setNomTable("Maison");
     }
 
+    public Maison(String nom2, double longueur2, double largeur2, int nbrEtage, double latitude2, double longitude2) {
+        setNom(nom2);setLongueur(longueur2);setLargeur(largeur2);setEtage(nbrEtage);setLatitude(latitude2);setLongitude(longitude2);
+    }
+
     @Override
     public void construirePK(Connection c) throws Exception {
         this.preparePk("TR", "get_seq_maison");
@@ -100,6 +104,7 @@ public class Maison extends ClassMere {
     public String getTuppleID() {
         return "id";
     }
+
 
     @Override
     public ClassMAPTable createObject(String u, Connection connection) throws Exception {
