@@ -45,7 +45,7 @@ CREATE TABLE paiement (
     id_maison VARCHAR2(50),
     mois NUMBER, 
     annee NUMBER,
-    date DATE,
+    dates DATE,
     FOREIGN KEY (id_maison) REFERENCES maison(id)
 );
 
