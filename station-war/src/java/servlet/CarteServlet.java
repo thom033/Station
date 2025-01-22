@@ -38,7 +38,7 @@ public class CarteServlet  extends HttpServlet{
     
             // Retrieve all houses from the database
             List<Maison> maisons = Maison.getAllMaison(connection);
-            System.out.println(maisons.lengh);
+            System.out.println(maisons.size());
     
             // Convert the list of houses to JSON
             String jsonResponse = gson.toJson(maisons);

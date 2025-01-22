@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
         #map {
-            height: 100vh;
+            height: 400px;
             margin-bottom: 20px;
         }
 
@@ -23,34 +23,20 @@
 </head>
 
 <body>
-
-    <div id="map"></div>   
-    <!-- Fenêtre modale Bootstrap pour les détails de la maison -->
-    <div class="modal fade" id="houseModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Détails de la Maison</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p id="houseDetails"></p>
-                </div>
-            </div>
-        </div>
+    <!-- Bouton pour voir la liste des arrondissements -->
+    <div class="button-container">
+        <a href="arrondissement" class="btn btn-primary">Voir la liste des arrondissements</a>
     </div>
 
-    <!-- Fenêtre modale Bootstrap pour l'ajout de la maison -->
-    <div class="modal fade" id="addHouseModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div id="map"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="houseModal" tabindex="-1" aria-labelledby="houseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Ajouter une Maison</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="houseModalLabel">Ajouter une Maison</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="houseForm">
@@ -123,28 +109,6 @@
             document.getElementById('longitude').value = e.latlng.lng.toFixed(6);
             var modal = new bootstrap.Modal(document.getElementById('houseModal'));
             modal.show();
-        // Récupérer les maisons depuis l'attribut de la requête
-        var maisons = JSON.parse('${maisons}'); // Utiliser l'attribut `maisons` passé depuis le servlet
-
-        maisons.forEach(function(house) {
-            // Ajouter une épingle pour chaque maison
-            var marker = L.marker([house.latitude, house.longitude], {icon: L.icon({iconUrl: 'https://iconarchive.com/download/i10837/google/noto-emoji-animals-nature/22215-poodle.ico', iconSize: [25, 25]})})
-                .addTo(map)
-                .bindPopup(`<b>${house.nom}</b><br>Longueur: ${house.longueur}m<br>Largeur: ${house.largeur}m`)
-                .on('click', function() {
-                    // Afficher les détails de la maison dans le modal
-                    var details = `Nom: ${house.nom}<br>Longueur: ${house.longueur}m<br>Largeur: ${house.largeur}m<br>Type Tafo: ${house.typeTafo}<br>Type Rindrinda: ${house.typeRindrinda}`;
-                    $('#houseDetails').html(details);
-                    $('#houseModal').modal('show');
-                });
-            console.log(house);
-        });
-
-        // Ajouter un événement de clic pour créer une maison
-        map.on('click', function(e) {
-            $('#latitude').val(e.latlng.lat);
-            $('#longitude').val(e.latlng.lng);
-            $('#addHouseModal').modal('show');
         });
 
         // Soumettre le formulaire
