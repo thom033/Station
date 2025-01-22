@@ -49,6 +49,8 @@ CREATE TABLE paiement (
     FOREIGN KEY (id_maison) REFERENCES maison(id)
 );
 
+ALTER TABLE paiement RENAME COLUMN dates TO date_paiement;
+
 CREATE TABLE hetra (
     id_hetra VARCHAR2(50) PRIMARY KEY,
     prix NUMBER(18, 2)
