@@ -1,3 +1,10 @@
+ALTER TABLE maison
+ADD (
+    latitude NUMBER,
+    longitude NUMBER
+);
+
+
 -- #### 1. **Ajout des Arrondissements**
 -- sql
 INSERT INTO arrondissement (id_arrondissement, nom)
@@ -129,3 +136,65 @@ VALUES (get_seq_maison_detaills(), 9, 3, 1);
 INSERT INTO maison_detaills (id_maison_detaills, id_maison, id_type_rindrina, id_type_tafo)
 VALUES (get_seq_maison_detaills(), 10, 1, 2);
 
+
+
+
+-- Mise à jour Maison A1-1
+UPDATE maison
+SET latitude = -18.8905, 
+    longitude = 47.5140
+WHERE nom = 'Maison A1-1';
+
+-- Mise à jour Maison A1-2
+UPDATE maison
+SET latitude = -18.8860, 
+    longitude = 47.5150
+WHERE nom = 'Maison A1-2';
+
+-- Mise à jour Maison A2-1
+UPDATE maison
+SET latitude = -18.8900, 
+    longitude = 47.5220
+WHERE nom = 'Maison A2-1';
+
+-- Mise à jour Maison A2-2
+UPDATE maison
+SET latitude = -18.8865, 
+    longitude = 47.5235
+WHERE nom = 'Maison A2-2';
+
+-- Mise à jour Maison A2-3
+UPDATE maison
+SET latitude = -18.8870, 
+    longitude = 47.5240
+WHERE nom = 'Maison A2-3';
+
+-- Mise à jour Maison A3-1
+UPDATE maison
+SET latitude = -18.8890, 
+    longitude = 47.5270
+WHERE nom = 'Maison A3-1';
+
+-- Mise à jour Maison A3-2
+UPDATE maison
+SET latitude = -18.8860, 
+    longitude = 47.5285
+WHERE nom = 'Maison A3-2';
+
+-- Mise à jour Maison A3-3
+UPDATE maison
+SET latitude = -18.8870, 
+    longitude = 47.5290
+WHERE nom = 'Maison A3-3';
+
+-- Mise à jour Maison A3-4
+UPDATE maison
+SET latitude = -18.8885, 
+    longitude = 47.5300
+WHERE nom = 'Maison A3-4';
+
+-- Mise à jour Maison A3-5
+UPDATE maison
+SET latitude = -18.8890, 
+    longitude = 47.5320
+WHERE nom = 'Maison A3-5';

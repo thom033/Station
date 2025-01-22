@@ -1,5 +1,6 @@
 package hetra.trano;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,13 +8,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.io.WKTReader;
-import org.locationtech.jts.geom.Geometry;
 
+import oracle.sql.STRUCT;
+import oracle.sql.ARRAY;
 
 import bean.ClassMAPTable;
 import bean.ClassMere;
+
 
 public class Maison extends ClassMere {
     
@@ -43,6 +44,15 @@ public class Maison extends ClassMere {
     }
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+     // Méthode pour vérifier si la longitude est définie (non NaN)
+     public boolean isLongitudeDefined() {
+        return !Double.isNaN(longitude);
+    }
+
+    // Méthode pour vérifier si la latitude est définie (non NaN)
+    public boolean isLatitudeDefined() {
+        return !Double.isNaN(latitude);
     }
     public double getLatitude() {
         return latitude;
@@ -146,8 +156,7 @@ public class Maison extends ClassMere {
 
     public static List<Maison> getAllMaison(Connection connection) throws Exception {
         List<Maison> maisons = new ArrayList<>();
-        // Modification de la requête pour récupérer la géométrie en WKT
-        String sql = "SELECT id, nom, longeur, largeur, nbr_etage, SDO_UTIL.TO_WKTGEOMETRY(position) AS position FROM maison";
+        String sql = "SELECT id, nom, longeur, largeur, nbr_etage, latitude, longitude FROM maison";
     
         try (PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
@@ -159,26 +168,8 @@ public class Maison extends ClassMere {
                 maison.setLongueur(resultSet.getDouble("longeur"));
                 maison.setLargeur(resultSet.getDouble("largeur"));
                 maison.setEtage(resultSet.getInt("nbr_etage"));
-    
-                // Récupérer la géométrie au format WKT
-                String positionWkt = resultSet.getString("position");
-    
-                if (positionWkt != null) {
-                    // Utiliser JTS WKTReader pour analyser la géométrie
-                    try {
-                        WKTReader wktReader = new WKTReader();
-                        Geometry geometry = wktReader.read(positionWkt);
-    
-                        // Si la géométrie est un point, extraire la latitude et la longitude
-                        if (geometry instanceof Point) {
-                            Point point = (Point) geometry;
-                            maison.setLongitude(point.getX()); // Longitude
-                            maison.setLatitude(point.getY());  // Latitude
-                        }
-                    } catch (Exception e) {
-                        throw new Exception("Erreur lors de l'analyse de la géométrie WKT : " + e.getMessage(), e);
-                    }
-                }
+                maison.setLatitude(resultSet.getDouble("latitude"));  // Récupère la latitude
+                maison.setLongitude(resultSet.getDouble("longitude")); // Récupère la longitude
     
                 maisons.add(maison);
             }
@@ -189,5 +180,7 @@ public class Maison extends ClassMere {
     
         return maisons;
     }
+    
+
     
 }

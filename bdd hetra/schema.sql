@@ -19,6 +19,8 @@ CREATE TABLE maison (
     position SDO_GEOMETRY
 );
 
+
+
 CREATE TABLE maison_detaills (
     id_maison_detaills VARCHAR2(50) PRIMARY KEY,
     id_maison VARCHAR2(50),

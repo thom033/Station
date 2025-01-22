@@ -11,7 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import utilitaire.UtilDB;
+import hetra.trano.*;
 import com.google.gson.Gson;
 
 import hetra.trano.*;
@@ -23,31 +24,41 @@ public class CarteServlet  extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            // Initialize Gson to convert data into JSON format
             Gson gson = new Gson();
-
-            TypeData data = new TypeData();
-
+    
+            // Set CORS headers
             resp.setHeader("Access-Control-Allow-Origin", "*");
             resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
             resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-            String jsonResponse = gson.toJson(data);
-            resp.setContentType("application/json");
-            resp.setCharacterEncoding("UTF-8");
-            resp.getWriter().write(jsonResponse);
-            
-                // Récupération de la connexion à la base de données
-            Connection connection = DatabaseUtils.getConnection(); // Assurez-vous que cette méthode est disponible
-            List<Maison> maisons = Maison.getAllMaison(connection); // Récupération des maisons
-
-        // Définir la liste des maisons comme attribut pour la JSP
-        req.setAttribute("maisons", maisons);
+    
+            // Connect to the database
+            UtilDB dbUtil = new UtilDB();
+            Connection connection = dbUtil.GetConn();
+    
+            // Retrieve all houses from the database
+            List<Maison> maisons = Maison.getAllMaison(connection);
+    
+            // Convert the list of houses to JSON
+            String jsonResponse = gson.toJson(maisons);
+    
+            // Set the JSON as an attribute in the request
+            req.setAttribute("maisons", jsonResponse);
+            // Write the JSON response to the output stream
+            //resp.getWriter().write(jsonResponse);
+            // Close the connection
+            connection.close();
+    
+           
+            // // Forward the request to the JSP page
             req.getRequestDispatcher("/pages/hetra/carte.jsp").forward(req, resp);
+    
         } catch (Exception e) {
             e.printStackTrace();
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
