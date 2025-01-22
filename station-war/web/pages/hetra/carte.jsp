@@ -10,6 +10,7 @@
         #map { height: 100%; width: 75%; float: left; }
     </style>
     <title>OpenStreetMap - Maisons</title>
+    <script src="/assets/js/hetra/loadDataFormulaire.js"></script>
 </head>
 <body>
     <div id="map"></div>   
@@ -25,9 +26,15 @@
                 </div>
                 <div class="modal-body">
                     <form id="houseForm">
-                        <div class="form-group">
-                            <label for="houseName">Nom:</label>
-                            <input type="text" class="form-control" id="houseName" name="houseName" required>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="houseName">Nom:</label>
+                                <input type="text" class="form-control" id="houseName" name="houseName" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="longitude">Nb Etage:</label>
+                                <input type="number" class="form-control" id="etage" name="etage">
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -52,19 +59,11 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="typeTafo">Type Tafo:</label>
-                                <select class="form-control" id="typeTafo" name="typeTafo">
-                                    <option value="">Choisir...</option>
-                                    <option value="type1">Type 1</option>
-                                    <option value="type2">Type 2</option>
-                                </select>
+                                <select id="typeTafo" name="typeTafo" class="form-control"></select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="typeRindrinda">Type Rindrinda:</label>
-                                <select class="form-control" id="typeRindrinda" name="typeRindrinda">
-                                    <option value="">Choisir...</option>
-                                    <option value="type1">Type 1</option>
-                                    <option value="type2">Type 2</option>
-                                </select>
+                                <label for="typeRindrina">Type Rindrina :</label>
+                                <select id="typeRindrina" name="typeRindrina" class="form-control"></select>
                             </div>
                         </div>
                         <button type="button" class="btn btn-primary" onclick="submitForm()">Soumettre</button>
@@ -97,13 +96,14 @@
         // Fonction pour soumettre le formulaire
         function submitForm() {
             var houseData = {
-                name: $('#houseName').val(),
-                length: $('#length').val(),
-                width: $('#width').val(),
+                nom: $('#houseName').val(),
+                longueur: $('#length').val(),
+                largeur: $('#width').val(),
                 typeTafo: $('#typeTafo').val(),
-                typeRindrinda: $('#typeRindrinda').val(),
+                typeRindrina: $('#typeRindrina').val(),
                 latitude: $('#latitude').val(),
-                longitude: $('#longitude').val()
+                longitude: $('#longitude').val(),
+                nbrEtage: $('#etage').val()            
             };
 
             console.log("Données maison:", houseData);
@@ -143,6 +143,49 @@
                 })
                 .catch(error => console.error('Erreur:', error));
         });
+    </script>
+    <%-- script get data --%>
+    <script>
+        async function loadTypeData() {
+            try {
+                console.log('Chargement des données...');
+                const response = await fetch('http://localhost:8080/station/data');
+                console.log('Réponse reçue :', response);
+                
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP : ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Données reçues :', data);
+
+                const tafoSelect = document.getElementById('typeTafo');
+                const rindrinaSelect = document.getElementById('typeRindrina');
+
+                data.typeTafoList.forEach(tafo => {
+                    const option = document.createElement('option');
+                    console.log(tafo);
+                    option.value = tafo.id_type_tafo;
+                    option.textContent = tafo.nom;
+                    tafoSelect.appendChild(option);
+                });
+
+                data.typeRindrinaList.forEach(rindrina => {
+                    const option = document.createElement('option');
+                    option.value = rindrina.id_type_rindrina;
+                                        console.log(rindrina);
+                    option.textContent = rindrina.nom;
+                    rindrinaSelect.appendChild(option);
+                });
+
+            } catch (error) {
+                console.error('Erreur lors du chargement des données :', error);
+            }
+        }
+
+
+        // Charger les données dès que la page est prête
+        document.addEventListener('DOMContentLoaded', loadTypeData);
     </script>
 </body>
 </html>
