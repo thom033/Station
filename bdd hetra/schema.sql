@@ -1,16 +1,17 @@
 CREATE TABLE type_tafo (
-    id_type_tafo NUMBER PRIMARY KEY,
+    id_type_tafo VARCHAR2(50) PRIMARY KEY,
     nom VARCHAR2(100),
     coefficient NUMBER
 );
 
 CREATE TABLE type_rindrina (
-    id_type_rindrina NUMBER PRIMARY KEY,
+    id_type_rindrina VARCHAR2(50) PRIMARY KEY,
     nom VARCHAR2(100),
     coefficient NUMBER
 );
+
 CREATE TABLE maison (
-    id NUMBER PRIMARY KEY,
+    id VARCHAR2(50) PRIMARY KEY,
     nom VARCHAR2(100),
     longeur NUMBER,
     largeur NUMBER,
@@ -19,35 +20,36 @@ CREATE TABLE maison (
 );
 
 CREATE TABLE maison_detaills (
-    id_maison_detaills NUMBER PRIMARY KEY,
-    id_maison varchar(50),
-    id_type_rindrina varchar(50),
-    id_type_tafo varchar(50),
+    id_maison_detaills VARCHAR2(50) PRIMARY KEY,
+    id_maison VARCHAR2(50),
+    id_type_rindrina VARCHAR2(50),
+    id_type_tafo VARCHAR2(50),
     FOREIGN KEY (id_maison) REFERENCES maison(id),
     FOREIGN KEY (id_type_rindrina) REFERENCES type_rindrina(id_type_rindrina),
     FOREIGN KEY (id_type_tafo) REFERENCES type_tafo(id_type_tafo)
 );
 
 CREATE TABLE arrondissement (
-    id_arrondissement varchar(50) PRIMARY KEY,
+    id_arrondissement VARCHAR2(50) PRIMARY KEY,
     nom VARCHAR2(100)
 );
 
 CREATE TABLE arrondissement_position (
-    id_arrondissement varchar(50),
+    id_arrondissement VARCHAR2(50),
     position SDO_GEOMETRY,
     FOREIGN KEY (id_arrondissement) REFERENCES arrondissement(id_arrondissement)
 );
 
-table hetra{
-    id
-    prix
-    date
-}
+CREATE TABLE paiement (
+    id VARCHAR2(50) PRIMARY KEY,
+    id_maison VARCHAR2(50),
+    mois NUMBER, 
+    annee NUMBER,
+    date_paiement DATE,
+    FOREIGN KEY (id_maison) REFERENCES maison(id)
+);
 
-table paiementP{
-    id
-    id_maison
-    
-    date
-}
+CREATE TABLE hetra (
+    id_hetra VARCHAR2(50) PRIMARY KEY,
+    prix NUMBER(18, 2)
+);
