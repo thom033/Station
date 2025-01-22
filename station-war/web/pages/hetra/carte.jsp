@@ -27,8 +27,23 @@
     <div class="button-container">
         <a href="arrondissement" class="btn btn-primary">Voir la liste des arrondissements</a>
     </div>
-
+    <!-- Fenêtre modale Bootstrap pour les détails de la maison -->
     <div id="map"></div>
+      <div class="modal fade" id="houseModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Détails de la Maison</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="houseDetails"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="houseModal" tabindex="-1" aria-labelledby="houseModalLabel" aria-hidden="true">
@@ -103,6 +118,30 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
+
+        // Récupérer les maisons depuis l'attribut de la requête
+        var maisons = JSON.parse('${maisons}'); // Utiliser l'attribut `maisons` passé depuis le servlet
+
+        maisons.forEach(function(house) {
+            var marker = L.circleMarker([house.latitude, house.longitude], {
+                radius: 10, // Augmenter la taille du cercle pour qu'il soit bien visible
+                    fillColor: "red", // Couleur de remplissage
+                    color: "red", // Couleur du contour
+                    weight: 2, // Poids du contour
+                    opacity: 1, // Opacité du contour
+                    fillOpacity: 0.8 // Opacité du remplissage
+                })
+                .addTo(map)
+                .bindPopup(`<b>${house.nom}</b><br>Longueur: ${house.longueur}m<br>Largeur: ${house.largeur}m`)
+                .on('click', function() {
+                    // Afficher les détails de la maison dans le modal
+                    var details = `Nom: ${house.nom}<br>Longueur: ${house.longueur}m<br>Largeur: ${house.largeur}m<br>Type Tafo: ${house.typeTafo}<br>Type Rindrinda: ${house.typeRindrinda}`;
+                    $('#houseDetails').html(details);
+                    $('#houseModal').modal('show');
+                });
+
+            console.log(house);
+        });
         // Ajouter un événement de clic pour afficher les coordonnées dans les champs Latitude et Longitude
         map.on('click', function (e) {
             document.getElementById('latitude').value = e.latlng.lat.toFixed(6);
@@ -124,8 +163,6 @@
                 nbrEtage: document.getElementById('etage').value,
             };
 
-            console.log("Données maison:", houseData);
-
             fetch('http://localhost:8080/station/carte', {
                 method: 'POST',
                 headers: {
@@ -136,18 +173,13 @@
                 .then(response => {
                     if (response.ok) {
                         alert('Maison ajoutée avec succès!');
-                        var modal = bootstrap.Modal.getInstance(document.getElementById('houseModal'));
+                        var modal = bootstrap.Modal.getInstance(document.getElementByI+d('houseModal'));
                         modal.hide();
                     } else {
                         alert('Erreur lors de l\'ajout de la maison.');
                     }
                 })
                 .catch(error => console.error('Erreur:', error));
-        }
-
-        // Fonction pour afficher la liste des arrondissements
-        function viewArrondissements() {
-            alert("Affichage de la liste des arrondissements (fonctionnalité à implémenter).");
         }
         
         async function loadTypeData() {
