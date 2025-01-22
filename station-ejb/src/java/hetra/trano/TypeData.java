@@ -1,11 +1,14 @@
 package hetra.trano;
 
-class TypeData {
+import bean.CGenUtil;
+
+public class TypeData {
     TypeRindrina[] typeRindrinaList;
     TypeTafo[] typeTafoList;
 
-    TypeData(TypeRindrina[] typeRindrinaList, TypeTafo[] typeTafoList) {
-        this.typeRindrinaList = typeRindrinaList;
-        this.typeTafoList = typeTafoList;
+    public TypeData() throws Exception {
+
+        this.typeRindrinaList = (TypeRindrina[]) CGenUtil.rechercher(new TypeRindrina(), null, null, "");
+        this.typeTafoList = (TypeTafo[]) CGenUtil.rechercher(new TypeTafo(), null, null, "");
     }
 }
