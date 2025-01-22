@@ -128,25 +128,7 @@
 
         maisons.forEach(function(house) {
             // Ajouter une épingle pour chaque maison
-            // var marker = L.marker([house.latitude, house.longitude], {icon: L.icon({iconUrl: 'https://iconarchive.com/download/i10837/google/noto-emoji-animals-nature/22215-poodle.ico', iconSize: [25, 25]})})
-            //     .addTo(map)
-            //     .bindPopup(`<b>${house.nom}</b><br>Longueur: ${house.longueur}m<br>Largeur: ${house.largeur}m`)
-            //     .on('click', function() {
-            //         // Afficher les détails de la maison dans le modal
-            //         var details = `Nom: ${house.nom}<br>Longueur: ${house.longueur}m<br>Largeur: ${house.largeur}m<br>Type Tafo: ${house.typeTafo}<br>Type Rindrinda: ${house.typeRindrinda}`;
-            //         $('#houseDetails').html(details);
-            //         $('#houseModal').modal('show');
-            //     });
-            // Modifier l'icône du marqueur pour un point rouge
-           // Modifier l'icône du marqueur pour un point rouge avec circleMarker
-            var marker = L.circleMarker([house.latitude, house.longitude], {
-                radius: 10, // Augmenter la taille du cercle pour qu'il soit bien visible
-                    fillColor: "red", // Couleur de remplissage
-                    color: "red", // Couleur du contour
-                    weight: 2, // Poids du contour
-                    opacity: 1, // Opacité du contour
-                    fillOpacity: 0.8 // Opacité du remplissage
-                })
+            var marker = L.marker([house.latitude, house.longitude], {icon: L.icon({iconUrl: 'https://iconarchive.com/download/i10837/google/noto-emoji-animals-nature/22215-poodle.ico', iconSize: [25, 25]})})
                 .addTo(map)
                 .bindPopup(`<b>${house.nom}</b><br>Longueur: ${house.longueur}m<br>Largeur: ${house.largeur}m`)
                 .on('click', function() {
@@ -155,7 +137,6 @@
                     $('#houseDetails').html(details);
                     $('#houseModal').modal('show');
                 });
-
             console.log(house);
         });
 
