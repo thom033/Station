@@ -1,76 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <%-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> --%>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
     <style type="text/css">
-        html, body { height: 100%; margin: 0; padding: 0 }
-        #map { height: 100%; width: 75%; float: left; }
+        #map { height:100vh; width: 100%}
     </style>
     <title>OpenStreetMap - Maisons</title>
-    <script src="/assets/js/hetra/loadDataFormulaire.js"></script>
-</head>
-<body>
     <div id="map"></div>   
-    <!-- Fenêtre modale Bootstrap -->
-    <div class="modal fade" id="houseModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Ajouter une Maison</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="houseForm">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="houseName">Nom:</label>
-                                <input type="text" class="form-control" id="houseName" name="houseName" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="longitude">Nb Etage:</label>
-                                <input type="number" class="form-control" id="etage" name="etage">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="latitude">Latitude:</label>
-                                <input type="text" class="form-control" id="latitude" name="latitude">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="longitude">Longitude:</label>
-                                <input type="text" class="form-control" id="longitude" name="longitude">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="length">Longueur:</label>
-                                <input type="number" class="form-control" id="length" name="length" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="width">Largeur:</label>
-                                <input type="number" class="form-control" id="width" name="width" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="typeTafo">Type Tafo:</label>
-                                <select id="typeTafo" name="typeTafo" class="form-control"></select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="typeRindrina">Type Rindrina :</label>
-                                <select id="typeRindrina" name="typeRindrina" class="form-control"></select>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="submitForm()">Soumettre</button>
-                    </form>
-                </div>
+    <button id="myBtn">Ouvrir le formulaire</button>
+    <div id="houseModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h5>Ajouter une Maison</h5>
+        <form id="houseForm">
+            <div class="form-group">
+                <label for="houseName">Nom:</label>
+                <input type="text" id="houseName" name="houseName" required>
             </div>
-        </div>
+            <div class="form-group">
+                <label for="etage">Nb Etage:</label>
+                <input type="number" id="etage" name="etage">
+            </div>
+            <div class="form-group">
+                <label for="latitude">Latitude:</label>
+                <input type="text" id="latitude" name="latitude">
+            </div>
+            <div class="form-group">
+                <label for="longitude">Longitude:</label>
+                <input type="text" id="longitude" name="longitude">
+            </div>
+            <div class="form-group">
+                <label for="length">Longueur:</label>
+                <input type="number" id="length" name="length" required>
+            </div>
+            <div class="form-group">
+                <label for="width">Largeur:</label>
+                <input type="number" id="width" name="width" required>
+            </div>
+            <div class="form-group">
+                <label for="typeTafo">Type Tafo:</label>
+                <select id="typeTafo" name="typeTafo"></select>
+            </div>
+            <div class="form-group">
+                <label for="typeRindrina">Type Rindrina :</label>
+                <select id="typeRindrina" name="typeRindrina"></select>
+            </div>
+            <button type="button" class="btn" onclick="submitForm()">Soumettre</button>
+        </form>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -187,5 +220,4 @@
         // Charger les données dès que la page est prête
         document.addEventListener('DOMContentLoaded', loadTypeData);
     </script>
-</body>
-</html>
+
