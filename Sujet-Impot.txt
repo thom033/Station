@@ -1,0 +1,35 @@
+Sujet Impot :
+- Créer un fichier de configuration : pour mettre l'impot par m2
+=> Base impot = Surface habitable * prix impot
+=> Surface habitable = surface en m2 * nb etages
+ex: 100m2 * 4etages = 400m2 * 1000Ar = 400000 Ar
+
+
+On a 1 maison (Longueur, largeur)
+avec bcp de caractéristiques
+ex: 
+Fenetre
+
+Toit 
+	- beton
+	- paille
+	- tole
+
+Mur 
+	- bois : 0,8 (Coeff)
+	- brique :1,1
+	- beton :1,2
+
+Impot mensuel = base impot * coeff des caracteristiques 
+ACTION : 
+- Payer Impot (misafidy periode ,ex: Janvier, Fevrier, etc)
+- situation Impot dans un periode
+	-> Fiche etat impots de la maison en 2024 (tonga de hita eo hoe déjà payer ny Janvier sy fevrier par Exemple sy  ny Reste a payer)
+
+
+
+Piment : Mettre sur une carte (OpenStreetMap) lasa misy Latitude sy longitude izan chaque maison
+Misy concept ana Arrondissement suivant Latitude et longitude bdb
+- Afaka aseho aveo ny etat Impot pour chaque arrondissement (Tonga de global genre zao no efa voaloha ary zao ny reste a payer)
+- Atao point le carte asina hoe 1, 2 , 3, 4 
+
