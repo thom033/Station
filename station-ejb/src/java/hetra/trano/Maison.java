@@ -5,28 +5,21 @@ import java.sql.PreparedStatement;
 
 import bean.ClassMAPTable;
 import bean.ClassMere;
+import utilitaire.UtilDB;
 
 public class Maison extends ClassMere {
     
     String id, nom;
     double longueur, largeur;
     int etage;
-    String type_tafo, type_rindrina;
+    MaisonDetails details;
     double latitude, longitude;
-    public String getType_tafo() {
-        return type_tafo;
-    }
 
-    public void setType_tafo(String type_tafo) {
-        this.type_tafo = type_tafo;
+    public void setDetails(MaisonDetails details) {
+        this.details = details;
     }
-
-    public String getType_rindrina() {
-        return type_rindrina;
-    }
-
-    public void setType_rindrina(String type_rindrina) {
-        this.type_rindrina = type_rindrina;
+    public MaisonDetails getDetails() {
+        return details;
     }
     public void setLongitude(double longitude) {
         this.longitude = longitude;
@@ -107,11 +100,12 @@ public class Maison extends ClassMere {
 
 
     @Override
-    public ClassMAPTable createObject(String u, Connection connection) throws Exception {
+    public int insertToTable() throws Exception {
         String sql = "INSERT INTO maison (id, nom, longeur, largeur, nbr_etage, position) " +
         "VALUES (?, ?, ?, ?, ?, SDO_GEOMETRY(2001, 4326, SDO_POINT_TYPE(?, ?, NULL), NULL, NULL))";
-        this.construirePK(connection);
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection c = new UtilDB().GetConn();
+            PreparedStatement statement = c.prepareStatement(sql)) {
+                this.construirePK(c);
 
             // Paramètres de la requête
             statement.setString(1, this.getId());
@@ -124,14 +118,16 @@ public class Maison extends ClassMere {
             // Exécution de la requête
             int rowsInserted = statement.executeUpdate();
 
+            this.getDetails().setId_maison(this.getId());
+            this.getDetails().insertToTable(c);
+
             if (rowsInserted > 0) {
                 System.out.println("Insertion réussie dans la table `maison`.");
             }
-
+            return rowsInserted;
         } catch (Exception e) {
             throw e;
         }
-        return this;
     }
 
     
