@@ -93,6 +93,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+
+        let maisons = [];
         // Initialiser la carte
         const map = L.map('map').setView([-18.8792, 47.5079], 13);
 
@@ -101,44 +103,26 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Charger les données des maisons
-        let maisons = [];
-
-        try {
-            maisons = JSON.parse('${maisons}');
-            console.log("Maisons importées :", maisons);
-        } catch (e) {
-            console.error("Erreur lors de l'import des maisons :", e);
-        }
 
         // Ajouter des marqueurs pour chaque maison
-        maisons.forEach(maison => {
-            console.log(maison.nom, maison.latitude, maison.longitude);
-            
+        
+        function addMaisonMarker(maison) {
             L.marker([maison.latitude, maison.longitude])
-                .addTo(map)
-                .bindPopup(`<b>Nom:</b> ${maison.nom}<br>
-                            <b>Etages:</b> ${maison.etage}<br>
-                            <b>Largeur:</b> ${maison.largeur} m<br>
-                            <b>Longueur:</b> ${maison.longueur} m`);
-        });
-
+                .addTo(markersLayer)
+                .bindPopup("<b>Nom:</b> " + maison.nom + "<br> <b>Etages:</b> " + maison.nbrEtage + "<br> <b>Largeur:</b> " + maison.largeur + " m<br> <b>Longueur:</b> " + maison.longueur + " m");
+        }
+       
+        // Charger les données des maisons
         function refreshMaisons() {
             fetch('http://localhost:8080/station/carte') // URL de votre API
             .then(response => response.json())
             .then(data => {
                 // Efface les anciens marqueurs
                 markersLayer.clearLayers();
-
+                maisons = data;
                 // Ajoute les nouveaux marqueurs
-                data.forEach(maison => {
-                    L.marker([maison.latitude, maison.longitude])
-                        .addTo(markersLayer)
-                        .bindPopup(`
-                            <b>${maison.nom}</b><br>
-                            Largeur: ${maison.largeur}m<br>
-                            Longueur: ${maison.longueur}m
-                        `);
+                maisons.forEach(maison => {
+                    addMaisonMarker(maison);
                 });
             })
             .catch(error => console.error('Erreur lors du chargement des maisons :', error));
@@ -174,12 +158,16 @@
                     option.textContent = rindrina.nom;
                     rindrinaSelect.appendChild(option);
                 });
+                
             } catch (error) {
                 console.error("Erreur lors du chargement des types :", error);
             }
         }
 
-        document.addEventListener('DOMContentLoaded', loadTypeData);
+        document.addEventListener('DOMContentLoaded', () => {
+            refreshMaisons();
+            loadTypeData();
+        });
 
     function submitForm() {
         const houseData = {

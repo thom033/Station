@@ -47,9 +47,6 @@ public class CarteServlet  extends HttpServlet{
             // Définir le JSON comme attribut de la requête
             req.setAttribute("maisons", jsonResponse);
 
-            // Transférer la requête vers la page JSP
-            req.getRequestDispatcher("/pages/hetra/carte.jsp").forward(req, resp);
-
         } catch (Exception e) {
             e.printStackTrace(); // Afficher les détails de l'erreur dans la console
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
