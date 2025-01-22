@@ -21,15 +21,6 @@ import hetra.trano.Maison;
 public class CarteServlet  extends HttpServlet{
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {            
-            req.getRequestDispatcher("/pages/hetra/carte.jsp").forward(req, resp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             response.setHeader("Access-Control-Allow-Origin", "*");
