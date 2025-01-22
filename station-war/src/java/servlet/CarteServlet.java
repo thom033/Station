@@ -3,6 +3,7 @@ package servlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -15,8 +16,6 @@ import com.google.gson.Gson;
 
 import hetra.trano.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import hetra.trano.Maison;
 
 @WebServlet( urlPatterns = {"/carte"})
 public class CarteServlet  extends HttpServlet{
@@ -37,6 +36,12 @@ public class CarteServlet  extends HttpServlet{
             resp.setCharacterEncoding("UTF-8");
             resp.getWriter().write(jsonResponse);
             
+                // Récupération de la connexion à la base de données
+            Connection connection = DatabaseUtils.getConnection(); // Assurez-vous que cette méthode est disponible
+            List<Maison> maisons = Maison.getAllMaison(connection); // Récupération des maisons
+
+        // Définir la liste des maisons comme attribut pour la JSP
+        req.setAttribute("maisons", maisons);
             req.getRequestDispatcher("/pages/hetra/carte.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
