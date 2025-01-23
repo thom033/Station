@@ -46,31 +46,37 @@ CREATE TABLE maison_detaills (
     largeur NUMBER(10, 2) NOT NULL,                              
     nb_etages NUMBER NOT NULL, 
     id_type_tafo NUMBER NOT NULL,
-    id_type_rindrina NUMBER NOT NULL,                                                                       -- Date de fin de validité (optionnelle)
+    id_type_rindrina NUMBER NOT NULL,
     PRIMARY KEY (id_trano),                          
-    FOREIGN KEY (id_trano) REFERENCES trano(id_trano),
+    FOREIGN KEY (id_trano) REFERENCES maison(id_trano),
     FOREIGN KEY (id_type_tafo) REFERENCES type_tafo(id_type_tafo),
     FOREIGN KEY (id_type_rindrina) REFERENCES type_rindrina(id_type_rindrina)
 );
 
-CREATE TABLE type_tafo(
-    id_type_tafo,
-    nom
-)
-
-create table type_tafo_coefficient(
-    id_type_tafo,
-    coefficient,
-    date
+-- ##### Création de la table type_tafo #####
+CREATE TABLE type_tafo (
+    id_type_tafo NUMBER PRIMARY KEY,
+    nom VARCHAR2(100) NOT NULL
 );
 
-CREATE table type_rindrina(
-    id_type_rindrina
-    nom
-)
+-- ##### Création de la table type_tafo_coefficient #####
+CREATE TABLE type_tafo_coefficient (
+    id_type_tafo NUMBER NOT NULL,
+    coefficient NUMBER NOT NULL,
+    date DATE NOT NULL,
+    FOREIGN KEY (id_type_tafo) REFERENCES type_tafo(id_type_tafo)
+);
 
-create table type_rindrina_coefficient(
-    id_type_rindrina,
-    coefficient,
-    date
+-- ##### Création de la table type_rindrina #####
+CREATE TABLE type_rindrina (
+    id_type_rindrina NUMBER PRIMARY KEY,
+    nom VARCHAR2(100) NOT NULL
+);
+
+-- ##### Création de la table type_rindrina_coefficient #####
+CREATE TABLE type_rindrina_coefficient (
+    id_type_rindrina NUMBER NOT NULL,
+    coefficient NUMBER NOT NULL,
+    date DATE NOT NULL,
+    FOREIGN KEY (id_type_rindrina) REFERENCES type_rindrina(id_type_rindrina)
 );
