@@ -92,6 +92,8 @@ public class Maison extends ClassMere {
     public void setEtage(int etage) {
         this.etage = etage;
     }
+
+
     public Maison () {
         this.setNomTable("Maison");
     }
