@@ -37,7 +37,7 @@ CREATE TABLE maison (
     id_proprietaire VARCHAR2(50) NOT NULL, -- Identifiant du propriétaire
     nom VARCHAR2(100) NOT NULL,        -- Nom du bâtiment
     longitude NUMBER(10, 6) NOT NULL,  -- Coordonnée longitude
-    latitude NUMBER(10, 6) NOT NULL 
+    latitude NUMBER(10, 6) NOT NULL,
     position SDO_GEOMETRY   -- Coordonnée latitude
 );
 
@@ -59,7 +59,7 @@ CREATE TABLE maison_details (
 -- ##### Création de la table type_tafo #####
 CREATE TABLE type_tafo (
     id_type_tafo VARCHAR2(50) PRIMARY KEY,
-    nom VARCHAR2(100) NOT NULL,
+    nom VARCHAR2(100) NOT NULL
 );
 
 -- ##### Création de la table type_tafo_coefficient #####
@@ -68,7 +68,7 @@ CREATE TABLE type_tafo_coefficient (
     coefficient NUMBER NOT NULL,
     id_commune VARCHAR2(50),
     date_modification DATE NOT NULL,
-    FOREIGN KEY (id_type_tafo) REFERENCES type_tafo(id_type_tafo)
+    FOREIGN KEY (id_type_tafo) REFERENCES type_tafo(id_type_tafo),
     FOREIGN KEY (id_commune) REFERENCES commune(id_commune)
 );
 
