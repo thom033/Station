@@ -42,14 +42,15 @@ CREATE TABLE maison (
 );
 
 -- ##### Création de la table des surfaces des bâtiments #####
-CREATE TABLE maison_detaills (
+CREATE TABLE maison_details (
+    id_maison_details VARCHAR2(50),
     id_maison VARCHAR2(50) NOT NULL,                                     
     longueur NUMBER(10, 2) NOT NULL,                             
     largeur NUMBER(10, 2) NOT NULL,                              
     nb_etages NUMBER NOT NULL, 
     id_type_tafo VARCHAR2(50) NOT NULL,
     id_type_rindrina VARCHAR2(50) NOT NULL,
-    PRIMARY KEY (id_maison),                          
+    PRIMARY KEY (id_maison_details),                          
     FOREIGN KEY (id_maison) REFERENCES maison(id_maison),
     FOREIGN KEY (id_type_tafo) REFERENCES type_tafo(id_type_tafo),
     FOREIGN KEY (id_type_rindrina) REFERENCES type_rindrina(id_type_rindrina)
