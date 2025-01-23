@@ -37,7 +37,8 @@ CREATE TABLE maison (
     id_proprietaire VARCHAR2(50) NOT NULL, -- Identifiant du propriétaire
     nom VARCHAR2(100) NOT NULL,        -- Nom du bâtiment
     longitude NUMBER(10, 6) NOT NULL,  -- Coordonnée longitude
-    latitude NUMBER(10, 6) NOT NULL    -- Coordonnée latitude
+    latitude NUMBER(10, 6) NOT NULL 
+    position SDO_GEOMETRY   -- Coordonnée latitude
 );
 
 -- ##### Création de la table des surfaces des bâtiments #####
