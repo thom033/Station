@@ -1,11 +1,13 @@
 package hetra.trano;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.CGenUtil;
 import bean.ClassMere;
 import utilitaire.UtilDB;
 
@@ -105,7 +107,6 @@ public class Maison extends ClassMere {
     public static List<Maison> getAllMaison(Connection connection) throws Exception {
         List<Maison> maisons = new ArrayList<>();
         String sql = "SELECT id, nom, latitude, longitude FROM maison";
-    
         try (PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
     
@@ -114,8 +115,7 @@ public class Maison extends ClassMere {
                 maison.setId_maison(resultSet.getString("id"));
                 maison.setNom(resultSet.getString("nom"));
                 maison.setLatitude(resultSet.getDouble("latitude"));  // Récupère la latitude
-                maison.setLongitude(resultSet.getDouble("longitude")); // Récupère la longitude
-    
+                maison.setLongitude(resultSet.getDouble("longitude")); // Récupère la longitude                
                 maisons.add(maison);
             }
     
@@ -123,6 +123,28 @@ public class Maison extends ClassMere {
             throw new Exception("Erreur lors de la récupération des maisons : " + e.getMessage(), e);
         }
         return maisons;
+    }
+    public double totalCoef() {
+        return this.getDetails().getTypeRindrina().getCoefficient() * this.getDetails().getTypeTafo().getCoefficient();
+    }
+    public double totalSurface() {
+        return this.getDetails().getLargeur() * this.getDetails().getLongueur() * this.getDetails().getNbr_etages();
+    }
+    public MaisonDetails getDetailsByDates(Date date, Connection connection) throws Exception {
+
+        MaisonDetails details = new MaisonDetails();
+        details = (MaisonDetails) CGenUtil.rechercher(details, null, null , connection, " and id_maison = "+this.getId_maison()+" and dates <= "+ date +" order by dates desc")[0];
+
+        TypeRindrina rindrina = new TypeRindrina();
+        rindrina.getById(details.getId_type_rindrina(), "1", connection);
+
+        TypeTafo tafo = new TypeTafo();
+        tafo.getById(details.getId_type_tafo(), "1", connection);
+
+        details.setTypeRindrina(rindrina);
+        details.setTypeTafo(tafo);
+
+        return details;
     }
     
 
