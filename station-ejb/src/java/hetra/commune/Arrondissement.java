@@ -1,4 +1,4 @@
-package hetra.carte;
+package hetra.commune;
 
 import java.util.List;
 
