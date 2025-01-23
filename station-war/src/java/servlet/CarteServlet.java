@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utilitaire.UtilDB;
+import hetra.carte.Arrondissement;
 import hetra.trano.*;
 import com.google.gson.Gson;
 
@@ -36,14 +37,21 @@ public class CarteServlet  extends HttpServlet{
             UtilDB dbUtil = new UtilDB();
             Connection connection = dbUtil.GetConn();
     
-            // Retrieve all houses from the database
-            List<Maison> maisons = Maison.getAllMaison(connection);
+            // // Retrieve all houses from the database
+            // List<Maison> maisons = Maison.getAllMaison(connection);
     
-            // Convert the list of houses to JSON
-            String jsonResponse = gson.toJson(maisons);
-    
+            // // Convert the list of houses to JSON
+            // String jsonResponse = gson.toJson(maisons);
+            List<Arrondissement> arrondissements = Arrondissement.getAllArrondissement(connection);
+            req.setAttribute("arrondissements", arrondissements);
+            String jsonResponse = gson.toJson(arrondissements);
+
+
+            resp.getWriter().write(jsonResponse);
             // Set the JSON as an attribute in the request
-            req.setAttribute("maisons", jsonResponse);
+            //req.setAttribute("maisons", jsonResponse);
+
+            
             // Write the JSON response to the output stream
             //resp.getWriter().write(jsonResponse);
             // Close the connection
@@ -51,7 +59,7 @@ public class CarteServlet  extends HttpServlet{
     
            
             // // Forward the request to the JSP page
-            req.getRequestDispatcher("/pages/hetra/carte.jsp").forward(req, resp);
+            //req.getRequestDispatcher("/pages/hetra/carte.jsp").forward(req, resp);
     
         } catch (Exception e) {
             e.printStackTrace();

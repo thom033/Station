@@ -19,4 +19,32 @@ echo $JAVA_HOME
 java -version
 
 
+su - oracle
+sqlplus / as sysdba
 
+CREATE USER gallois IDENTIFIED BY gallois;
+
+
+GRANT DBA TO gallois;
+
+docker cp "/home/ninah/cluster/Station/base.dmp" oracle-xe-11g:/tmp/base.dmp
+imp gallois/gallois File= /tmp/base.dmp full= y 
+
+
+iif want to delete
+SELECT sid, serial#, username, status, machine, program
+FROM V$SESSION
+WHERE username = 'GALLOIS'; -- Case-sensitive!
+
+
+ALTER SYSTEM KILL SESSION '10,12923';
+ALTER SYSTEM KILL SESSION '51,12989';
+ALTER SYSTEM KILL SESSION '139,105';
+
+Mandefa Oracle
+	docker start oracle-xe-11g
+	docker exec -it oracle-xe-11g bash
+	sqlplus system/oracle@XE
+
+	
+docker run -d --name oracle-xe-11g -p 1521:1521 -p 8080:8080 oracleinanutshell/oracle-xe-11g
