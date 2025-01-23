@@ -1,0 +1,12 @@
+
+
+
+---creer classe 
+
+    - commune 
+        fonction:
+            -getprix_impot(date)
+            -getcoeff()
+    -  arrodissement
+
+    -   polygone
