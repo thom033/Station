@@ -7,6 +7,49 @@ import bean.ClassMAPTable;
 public class MaisonDetails extends ClassMAPTable {
     String id_maison_detaills, id_maison;
     String id_type_tafo, id_type_rindrina;
+    int largeur, longueur, nbr_etage;
+    TypeRindrina typeRindrina;
+    TypeTafo typeTafo;
+    public TypeRindrina getTypeRindrina() {
+        return typeRindrina;
+    }
+
+    public void setTypeRindrina(TypeRindrina typeRindrina) {
+        this.typeRindrina = typeRindrina;
+    }
+
+    public TypeTafo getTypeTafo() {
+        return typeTafo;
+    }
+
+    public void setTypeTafo(TypeTafo typeTafo) {
+        this.typeTafo = typeTafo;
+    }
+
+    public int getLargeur() {
+        return largeur;
+    }
+
+    public void setLargeur(int largeur) {
+        this.largeur = largeur;
+    }
+
+    public int getLongueur() {
+        return longueur;
+    }
+
+    public void setLongueur(int longueur) {
+        this.longueur = longueur;
+    }
+
+    public int getNbr_etage() {
+        return nbr_etage;
+    }
+
+    public void setNbr_etage(int nbr_etage) {
+        this.nbr_etage = nbr_etage;
+    }
+    
     public String getId_type_tafo() {
         return id_type_tafo;
     }
