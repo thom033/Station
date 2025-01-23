@@ -96,8 +96,8 @@ public class Maison extends ClassMere {
             statement.setString(1, this.getId_maison());
             statement.setString(2, this.getId_proprietaire());
             statement.setString(3, this.getNom());
-            statement.setDouble(4, this.getLongitude()); // Longitude
-            statement.setDouble(5, this.getLatitude()); // Latitude
+            statement.setDouble(4, this.getLongitude());
+            statement.setDouble(5, this.getLatitude());
 
             // Exécution de la requête
             int rowsInserted = statement.executeUpdate();
