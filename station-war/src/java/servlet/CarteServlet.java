@@ -15,11 +15,11 @@ import hetra.trano.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-@WebServlet( urlPatterns = {"/carte"})
+@WebServlet( "/cartes")
 public class CarteServlet  extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("hetra/carte.jsp").forward(req, resp);
+        req.getRequestDispatcher("/pages/hetra/carte.jsp").forward(req, resp);
     }
    
     @Override

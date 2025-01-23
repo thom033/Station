@@ -1,4 +1,5 @@
 Mandefa Oracle
+	docker run -d --name oracle-xe-11g -p 1521:1521 oracleinanutshell/oracle-xe-11g
 	docker start oracle-xe-11g
 	docker exec -it oracle-xe-11g bash
 	sqlplus system/oracle@XE
@@ -8,9 +9,8 @@ Mandefa Oracle
 	imp gallois/gallois@localhost:1521/xe FILE=/tmp/base.dmp FULL=YES
 
 
-docker run -d --name oracle-xe-11g -p 1521:1521 -p 8080:8080 oracleinanutshell/oracle-xe-11g
 
 
-create user gallois identfied by gallois;
-grante dba to gallois;
-grante connect, resources to gallois;
+create user gallois identified by gallois;
+grant dba to gallois;
+grant connect, resource to gallois;
