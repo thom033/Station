@@ -31,9 +31,9 @@ CREATE TABLE prix_impot (
     FOREIGN KEY (id_commune) REFERENCES commune(id_commune) -- Clé étrangère vers la table des communes
 );
 
--- ##### Création de la table des bâtiments (Trano) #####
+-- ##### Création de la table des bâtiments (maison) #####
 CREATE TABLE maison (
-    id_trano VARCHAR2(50) PRIMARY KEY, -- Identifiant unique du bâtiment
+    id_maison VARCHAR2(50) PRIMARY KEY, -- Identifiant unique du bâtiment
     id_proprietaire VARCHAR2(50) NOT NULL, -- Identifiant du propriétaire
     nom VARCHAR2(100) NOT NULL,        -- Nom du bâtiment
     longitude NUMBER(10, 6) NOT NULL,  -- Coordonnée longitude
@@ -43,14 +43,14 @@ CREATE TABLE maison (
 
 -- ##### Création de la table des surfaces des bâtiments #####
 CREATE TABLE maison_detaills (
-    id_trano VARCHAR2(50) NOT NULL,                                     
+    id_maison VARCHAR2(50) NOT NULL,                                     
     longueur NUMBER(10, 2) NOT NULL,                             
     largeur NUMBER(10, 2) NOT NULL,                              
     nb_etages NUMBER NOT NULL, 
     id_type_tafo VARCHAR2(50) NOT NULL,
     id_type_rindrina VARCHAR2(50) NOT NULL,
-    PRIMARY KEY (id_trano),                          
-    FOREIGN KEY (id_trano) REFERENCES maison(id_trano),
+    PRIMARY KEY (id_maison),                          
+    FOREIGN KEY (id_maison) REFERENCES maison(id_maison),
     FOREIGN KEY (id_type_tafo) REFERENCES type_tafo(id_type_tafo),
     FOREIGN KEY (id_type_rindrina) REFERENCES type_rindrina(id_type_rindrina)
 );
