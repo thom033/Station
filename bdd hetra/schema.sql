@@ -16,8 +16,7 @@ CREATE TABLE arrondissement (
 CREATE TABLE polygone (
     id_polygone VARCHAR2(50) PRIMARY KEY, -- Identifiant unique du polygone
     id_arrondissement VARCHAR2(50) NOT NULL, -- Référence vers l'arrondissement
-    longitude NUMBER(10, 6) NOT NULL,        -- Coordonnée longitude
-    latitude NUMBER(10, 6) NOT NULL,         -- Coordonnée latitude
+    POSITION SDO_GEOMETRY,
     FOREIGN KEY (id_arrondissement) REFERENCES arrondissement(id_arrondissement) -- Clé étrangère vers la table des arrondissements
 );
 
@@ -37,8 +36,19 @@ CREATE TABLE maison (
     id_proprietaire VARCHAR2(50) NOT NULL, -- Identifiant du propriétaire
     nom VARCHAR2(100) NOT NULL,        -- Nom du bâtiment
     longitude NUMBER(10, 6) NOT NULL,  -- Coordonnée longitude
-    latitude NUMBER(10, 6) NOT NULL 
+    latitude NUMBER(10, 6) NOT NULL, 
     position SDO_GEOMETRY   -- Coordonnée latitude
+);
+-- ##### Création de la table type_tafo #####
+CREATE TABLE type_tafo (
+    id_type_tafo VARCHAR2(50) PRIMARY KEY,
+    nom VARCHAR2(100) NOT NULL
+);
+
+-- ##### Création de la table type_rindrina #####
+CREATE TABLE type_rindrina (
+    id_type_rindrina VARCHAR2(50) PRIMARY KEY,
+    nom VARCHAR2(100) NOT NULL
 );
 
 -- ##### Création de la table des surfaces des bâtiments #####
@@ -56,31 +66,23 @@ CREATE TABLE maison_details (
     FOREIGN KEY (id_type_rindrina) REFERENCES type_rindrina(id_type_rindrina)
 );
 
--- ##### Création de la table type_tafo #####
-CREATE TABLE type_tafo (
-    id_type_tafo VARCHAR2(50) PRIMARY KEY,
-    nom VARCHAR2(100) NOT NULL
-);
+
 
 -- ##### Création de la table type_tafo_coefficient #####
 CREATE TABLE type_tafo_coefficient (
     id_type_tafo VARCHAR2(50) NOT NULL,
     coefficient NUMBER NOT NULL,
-    date DATE NOT NULL,
+    dates DATE NOT NULL,
     FOREIGN KEY (id_type_tafo) REFERENCES type_tafo(id_type_tafo)
 );
 
--- ##### Création de la table type_rindrina #####
-CREATE TABLE type_rindrina (
-    id_type_rindrina VARCHAR2(50) PRIMARY KEY,
-    nom VARCHAR2(100) NOT NULL
-);
+
 
 -- ##### Création de la table type_rindrina_coefficient #####
 CREATE TABLE type_rindrina_coefficient (
     id_type_rindrina VARCHAR2(50) NOT NULL,
     coefficient NUMBER NOT NULL,
-    date DATE NOT NULL,
+    dates DATE NOT NULL,
     FOREIGN KEY (id_type_rindrina) REFERENCES type_rindrina(id_type_rindrina)
 );
 
