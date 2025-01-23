@@ -60,6 +60,7 @@ WITH all_months AS (
 SELECT 
     am.id_maison,
     am.nom_maison,
+    am.annee,
     SUM(CASE WHEN p.date_paiement IS NOT NULL THEN am.hetra ELSE 0 END) AS total_paye,
     SUM(CASE WHEN p.date_paiement IS NULL THEN am.hetra ELSE 0 END) AS total_non_paye
 FROM 
@@ -67,4 +68,4 @@ FROM
 LEFT JOIN 
     paiement p ON am.id_maison = p.id_maison AND am.mois = p.mois AND am.annee = p.annee
 GROUP BY 
-    am.id_maison, am.nom_maison;
+    am.id_maison, am.nom_maison, am.annee;
