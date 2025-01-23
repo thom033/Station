@@ -57,6 +57,38 @@
                 </c:forEach>
             </tbody>
         </table>
+
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Maison</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Total Paye</th>
+                    <th scope="col">Total non Paye</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${sumHetraMaison}" var="sum">
+                    <tr>
+                        <td>${sum.id_maison}</td>
+                        <td>${sum.nom_maison}</td>
+                        <td>${sum.total_paye}</td>
+                        <td>${sum.total_non_paye}</td>
+                        <!-- <td><fmt:formatNumber value="${paiement.hetra}" type="currency" currencySymbol="Ar"/></td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${not empty paiement.date_paiement}">
+                                    <fmt:formatDate value="${paiement.date_paiement}" pattern="dd/MM/yyyy"/>
+                                </c:when>
+                                <c:otherwise>
+                                    Non payé
+                                </c:otherwise>
+                            </c:choose>
+                        </td> -->
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
     </div>
 
     <!-- Bootstrap JS and dependencies -->
