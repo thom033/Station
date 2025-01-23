@@ -70,12 +70,6 @@ public class CalculHetraMaison extends ClassMAPTable{
     }
 
     @Override
-    public void construirePK(Connection c) throws Exception {
-        this.preparePk("CHM", "seq_calculHetraMaison");
-        this.setId_maison(makePK(c));
-    }
-
-    @Override
     public String getAttributIDName() {
         return this.getId_maison();
     }
