@@ -3,10 +3,35 @@
 
 ---creer classe 
 
+
+    -proprietaire
+
     - commune 
         fonction:
             -getprix_impot(date)
-            -getcoeff()
-    -  arrodissement
+            -getcoeffrindrina(date)
+            -getcoefftafo(date)
 
-    -   polygone
+    -   coordonne
+
+    -  arrodissement
+            -List<Coordonne> getlistpolygone
+            -getcommit()
+            -getcommune
+            -list<maison>
+            -static_getAll_arrondissement
+
+    -maison 
+        -getproprio
+        -getarrondissement
+        -getMaison_details(date)
+        -getsurface(date)
+        -gethetra(date){
+            hetram2 = getarrondissement.getcommune.gethetre(date)
+
+            hetram_total= hetram2* getsurface(Date)* nbr etage * ( produit coeff tafe(date), coeff type_trindrina)
+        }
+
+        
+
+  

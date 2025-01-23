@@ -1,14 +1,46 @@
 -- Vue pour savoir dans quel arrondissement se trouve chaque maison
-CREATE OR REPLACE VIEW maison_arrondissement AS
+CREATE OR REPLACE VIEW vue_maison_arrondissement AS
 SELECT 
-    m.id AS id_maison,
-    a.id_arrondissement
+    m.id_maison,
+    m.nom AS nom_maison,
+    m.longitude AS maison_longitude,
+    m.latitude AS maison_latitude,
+    a.id_arrondissement,
+    a.nom AS nom_arrondissement,
+    CASE 
+        WHEN SDO_RELATE(
+            SDO_GEOMETRY(
+                2001,  -- Type de géométrie : point
+                8307,  -- SRID (système de coordonnées)
+                SDO_POINT_TYPE(m.longitude, m.latitude, NULL),
+                NULL,
+                NULL
+            ),
+            SDO_GEOMETRY(
+                2003,  -- Type de géométrie : polygone
+                8307,
+                NULL,
+                NULL,
+                SDO_ELEM_INFO_ARRAY(1, 1003, 1), -- Élément d'un polygone simple
+                SDO_ORDINATE_ARRAY(
+                    (SELECT LISTAGG(c.longitude, ', ') WITHIN GROUP (ORDER BY c.id_coordonne) || ',' ||
+                            LISTAGG(c.latitude, ', ') WITHIN GROUP (ORDER BY c.id_coordonne)
+                     FROM coordonne c WHERE c.id_arrondissement = a.id_arrondissement)
+                )
+            ),
+            'ANYINTERACT' -- Relation entre le point et le polygone
+        ) = 'TRUE'
+        THEN 'Dans l\'arrondissement'
+        ELSE 'Hors de l\'arrondissement'
+    END AS status
 FROM 
     maison m
 JOIN 
-    arrondissement_position ap ON SDO_RELATE(ap.position, m.position, 'mask=contains') = 'TRUE'
-JOIN 
-    arrondissement a ON ap.id_arrondissement = a.id_arrondissement;
+    arrondissement a
+    ON 1=1; -- Modifier selon vos relations
+
+
+
 
 -- Vue pour calculer le hetra d'une maison
 CREATE OR REPLACE VIEW calcul_hetra_maison AS
