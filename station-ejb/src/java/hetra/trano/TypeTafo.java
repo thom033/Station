@@ -5,15 +5,15 @@ import java.sql.Connection;
 import bean.ClassMAPTable;
 
 public class TypeTafo extends ClassMAPTable{
-    String id,nom;
+    String id_type_tafo,nom;
     int coefficient;
 
-    public String getId() {
-        return id;
+    public String getId_type_tafo() {
+        return id_type_tafo;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId_type_tafo(String id) {
+        this.id_type_tafo = id;
     }
 
     public String getNom() {
@@ -39,12 +39,12 @@ public class TypeTafo extends ClassMAPTable{
     @Override
     public void construirePK(Connection c) throws Exception {
         this.preparePk("TF", "seq_type_tafo");
-        this.setId(makePK(c));
+        this.setId_type_tafo(makePK(c));
     }
 
     @Override
     public String getAttributIDName() {
-        return this.getId();
+        return this.getId_type_tafo();
     }
 
     @Override

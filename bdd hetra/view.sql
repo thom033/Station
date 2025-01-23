@@ -1,82 +1,71 @@
--- Étapes :
-
---     Relation entre les positions des arrondissements et leurs surfaces
---     Les positions (coordonnées long, lat) des arrondissements, stockées dans arrondissement_position, sont utilisées pour former un polygone qui représente la surface de chaque arrondissement.
-
---     Vérification de l'appartenance d'une maison à un arrondissement
---     La position d'une maison, stockée sous forme de géométrie dans maison.position, est vérifiée pour savoir si elle se trouve dans le polygone d'un arrondissement.
-
---     Création de la vue reliant les maisons aux arrondissements
---     La vue reliera les id_maison de la table maison et les id_arrondissement de la table arrondissement.
-
--- ### **Résultat attendu :**
--- La vue `maison_arrondissement` reliera chaque maison (`id_maison`) à l'arrondissement (`id_arrondissement`) auquel elle appartient. Vous pouvez interroger cette vue pour obtenir directement les informations souhaitées.
-
-
--- #### **1. Création des polygones des arrondissements**
--- sql
-SELECT 
-    a.id_arrondissement, 
-    SDO_GEOM.SDO_CONVEXHULL(
-        SDO_AGGR_MDSYS.SDO_CONCAT_LINES(
-            CAST(COLLECT(ap.position) AS SDO_GEOMETRY_ARRAY)
-        )
-    ) AS surface
-FROM arrondissement a
-JOIN arrondissement_position ap 
-    ON a.id_arrondissement = ap.id_arrondissement
-GROUP BY a.id_arrondissement;
-
-
-
--- #### **2. Déterminer l'arrondissement d'une maison**
-
-SELECT 
-    m.id AS id_maison, 
-    a.id_arrondissement
-FROM maison m
-JOIN (
-    SELECT 
-        a.id_arrondissement, 
-        SDO_GEOM.SDO_CONVEXHULL(
-            SDO_AGGR_MDSYS.SDO_CONCAT_LINES(
-                CAST(COLLECT(ap.position) AS SDO_GEOMETRY_ARRAY)
-            )
-        ) AS surface
-    FROM arrondissement a
-    JOIN arrondissement_position ap 
-        ON a.id_arrondissement = ap.id_arrondissement
-    GROUP BY a.id_arrondissement
-) surfaces
-    ON SDO_INSIDE(m.position, surfaces.surface) = 'TRUE';
-
-
----
-
--- #### **3. Création de la vue finale**
-
-sql
+-- Vue pour savoir dans quel arrondissement se trouve chaque maison
 CREATE OR REPLACE VIEW maison_arrondissement AS
 SELECT 
-    m.id AS id_maison, 
+    m.id AS id_maison,
     a.id_arrondissement
-FROM maison m
-JOIN (
-    SELECT 
-        a.id_arrondissement, 
-        SDO_GEOM.SDO_CONVEXHULL(
-            SDO_AGGR_MDSYS.SDO_CONCAT_LINES(
-                CAST(COLLECT(ap.position) AS SDO_GEOMETRY_ARRAY)
-            )
-        ) AS surface
-    FROM arrondissement a
-    JOIN arrondissement_position ap 
-        ON a.id_arrondissement = ap.id_arrondissement
-    GROUP BY a.id_arrondissement
-) surfaces
-    ON SDO_INSIDE(m.position, surfaces.surface) = 'TRUE';
+FROM 
+    maison m
+JOIN 
+    arrondissement_position ap ON SDO_RELATE(ap.position, m.position, 'mask=contains') = 'TRUE'
+JOIN 
+    arrondissement a ON ap.id_arrondissement = a.id_arrondissement;
 
+-- Vue pour calculer le hetra d'une maison
+CREATE OR REPLACE VIEW calcul_hetra_maison AS
+SELECT 
+    m.id AS id_maison,
+    m.nom AS nom_maison,
+    (m.longeur * m.largeur * m.nbr_etage) AS surface,
+    tr.coefficient AS coefficient_rindrina,
+    tt.coefficient AS coefficient_tafo,
+    h.prix AS prix_par_m2,
+    (h.prix * m.longeur * m.largeur * m.nbr_etage * tr.coefficient * tt.coefficient) AS hetra
+FROM 
+    maison m
+JOIN 
+    maison_detaills md ON m.id = md.id_maison
+JOIN 
+    type_rindrina tr ON md.id_type_rindrina = tr.id_type_rindrina
+JOIN 
+    type_tafo tt ON md.id_type_tafo = tt.id_type_tafo
+JOIN 
+    hetra h ON 1 = 1; 
 
----
+CREATE OR REPLACE VIEW calcul_hetra_paiement AS
+SELECT 
+    chm.id_maison AS id_maison,
+    chm.nom_maison AS nom_maison,
+    chm.hetra AS hetra,
+    p.mois AS mois,
+    p.annee AS annee,
+    p.date_paiement AS date_paiement
+FROM 
+    calcul_hetra_maison chm
+LEFT JOIN 
+    paiement p ON chm.id_maison = p.id_maison;
 
-SELECT * FROM maison_arrondissement;
+CREATE OR REPLACE VIEW sum_hetra_maison AS
+WITH all_months AS (
+    SELECT
+        chm.id_maison AS id_maison,
+        chm.nom_maison AS nom_maison,
+        chm.hetra AS hetra,
+        m.mois AS mois,
+        y.annee AS annee
+    FROM 
+        calcul_hetra_maison chm,
+        (SELECT LEVEL AS mois FROM dual CONNECT BY LEVEL <= 12) m,
+        (SELECT DISTINCT annee FROM paiement) y
+)
+SELECT 
+    am.id_maison,
+    am.nom_maison,
+    am.annee,
+    SUM(CASE WHEN p.date_paiement IS NOT NULL THEN am.hetra ELSE 0 END) AS total_paye,
+    SUM(CASE WHEN p.date_paiement IS NULL THEN am.hetra ELSE 0 END) AS total_non_paye
+FROM 
+    all_months am
+LEFT JOIN 
+    paiement p ON am.id_maison = p.id_maison AND am.mois = p.mois AND am.annee = p.annee
+GROUP BY 
+    am.id_maison, am.nom_maison, am.annee;
