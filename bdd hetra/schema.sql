@@ -73,3 +73,9 @@ CREATE TABLE hetra (
     id_hetra VARCHAR2(50) PRIMARY KEY,
     prix NUMBER(18, 2)
 );
+
+ALTER TABLE maison
+ADD (
+    latitude NUMBER,
+    longitude NUMBER
+);

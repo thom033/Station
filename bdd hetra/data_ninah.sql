@@ -1,8 +1,3 @@
-ALTER TABLE maison
-ADD (
-    latitude NUMBER,
-    longitude NUMBER
-);
 
 
 -- #### 1. **Ajout des Arrondissements**
