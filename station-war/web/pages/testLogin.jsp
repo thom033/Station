@@ -6,6 +6,7 @@
 <%@ page import="bean.CGenUtil" %>
 <%@ page import="lc.Direction" %>
 <%@ page import="java.net.InetAddress" %>
+<%@ page import="hetra.commune.Mpiasa" %>
 <%
     UserEJB u = null;
     String username = null;
@@ -72,6 +73,8 @@
         session.setAttribute("lien", lien);
         String menu = "admin.jsp";
         session.setAttribute("menu", menu);
+        Mpiasa p = new Mpiasa(ut);
+        session.setAttribute("mpiasa",p);
         out.println("<script language='JavaScript'> document.location.replace('" + lien + "?" + queryString + "');</script>");
         
     } catch (Exception e) {
@@ -89,4 +92,4 @@
 
 
 
-<script language='JavaScript'> document.location.replace('<%=lien%>?"<%=queryString%>');</script>
+<%-- <script language='JavaScript'> document.location.replace('<%=lien%>?"<%=queryString%>');</script> --%>
