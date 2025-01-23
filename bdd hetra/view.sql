@@ -46,7 +46,7 @@ LEFT JOIN
 
 CREATE OR REPLACE VIEW sum_hetra_maison AS
 WITH all_months AS (
-    SELECT 
+    SELECT
         chm.id_maison AS id_maison,
         chm.nom_maison AS nom_maison,
         chm.hetra AS hetra,
