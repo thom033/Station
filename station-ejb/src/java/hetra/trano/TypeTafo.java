@@ -1,7 +1,9 @@
 package hetra.trano;
 
 import java.sql.Connection;
+import java.sql.Date;
 
+import bean.CGenUtil;
 import bean.ClassMAPTable;
 
 public class TypeTafo extends ClassMAPTable{
@@ -50,5 +52,9 @@ public class TypeTafo extends ClassMAPTable{
     @Override
     public String getTuppleID() {
         return "id_type_tafo";
+    }
+    public TypeRindrina getCoef(Date date, Connection c) throws Exception {
+        String query = "select * from type_tafo_coefficient where dates <= ? order by dates desc";
+        return (TypeRindrina) CGenUtil.rechercher(this,query, c)[0];
     }
 }
