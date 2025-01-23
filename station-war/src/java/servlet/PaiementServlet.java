@@ -14,6 +14,7 @@ import bean.CGenUtil;
 import hetra.paiement.Paiement;
 import hetra.paiement.CalculHetraPaiement;
 import hetra.trano.CalculHetraMaison;
+import hetra.trano.SumHetraMaison;
 
 @WebServlet("/paiement")
 public class PaiementServlet extends HttpServlet {
@@ -30,7 +31,8 @@ public class PaiementServlet extends HttpServlet {
                 : 2024; // Année par défaut
             
             // 1. Récupérer d'abord toutes les maisons
-            CalculHetraMaison[] maisons = (CalculHetraMaison[]) CGenUtil.rechercher(new CalculHetraMaison(), null, null, "");
+            CalculHetraMaison[] maisons = (CalculHetraMaison[]) CGenUtil.rechercher(new CalculHetraMaison(), null, null, "and id_maison = '1'");
+            
             
             // 2. Récupérer les paiements existants pour l'année sélectionnée
             String condition = "AND annee=" + annee;
@@ -73,8 +75,10 @@ public class PaiementServlet extends HttpServlet {
             // Convertir la liste en tableau
             CalculHetraPaiement[] resultatFinal = listeComplete.toArray(new CalculHetraPaiement[0]);
             
+            SumHetraMaison[] maisonsSum = (SumHetraMaison[]) CGenUtil.rechercher(new SumHetraMaison(), null, null, "and id_maison = '1'");
             // Stockage des données dans la requête
             request.setAttribute("paiements", resultatFinal);
+            request.setAttribute("sumHetraMaison", maisonsSum);
             request.setAttribute("anneeSelectionnee", annee);
             
             // Redirection vers la JSP
