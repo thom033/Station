@@ -59,15 +59,17 @@ CREATE TABLE maison_details (
 -- ##### Création de la table type_tafo #####
 CREATE TABLE type_tafo (
     id_type_tafo VARCHAR2(50) PRIMARY KEY,
-    nom VARCHAR2(100) NOT NULL
+    nom VARCHAR2(100) NOT NULL,
 );
 
 -- ##### Création de la table type_tafo_coefficient #####
 CREATE TABLE type_tafo_coefficient (
     id_type_tafo VARCHAR2(50) NOT NULL,
     coefficient NUMBER NOT NULL,
-    date DATE NOT NULL,
+    id_commune VARCHAR2(50),
+    date_modification DATE NOT NULL,
     FOREIGN KEY (id_type_tafo) REFERENCES type_tafo(id_type_tafo)
+    FOREIGN KEY (id_commune) REFERENCES commune(id_commune)
 );
 
 -- ##### Création de la table type_rindrina #####
@@ -80,8 +82,10 @@ CREATE TABLE type_rindrina (
 CREATE TABLE type_rindrina_coefficient (
     id_type_rindrina VARCHAR2(50) NOT NULL,
     coefficient NUMBER NOT NULL,
-    date DATE NOT NULL,
-    FOREIGN KEY (id_type_rindrina) REFERENCES type_rindrina(id_type_rindrina)
+    id_commune VARCHAR2(50),
+    date_modification DATE NOT NULL,
+    FOREIGN KEY (id_type_rindrina) REFERENCES type_rindrina(id_type_rindrina),
+    FOREIGN KEY (id_commune) REFERENCES commune(id_commune)
 );
 
 -- ##### Création de la table des propriétaires #####
