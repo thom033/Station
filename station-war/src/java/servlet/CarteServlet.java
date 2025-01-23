@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import hetra.trano.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,6 +17,15 @@ import hetra.trano.Maison;
 
 @WebServlet( urlPatterns = {"/carte"})
 public class CarteServlet  extends HttpServlet{
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {            
+            req.getRequestDispatcher("/pages/hetra/carte.jsp").forward(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {

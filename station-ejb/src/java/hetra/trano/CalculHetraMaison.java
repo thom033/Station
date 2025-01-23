@@ -1,30 +1,32 @@
 package hetra.trano;
 
-import java.io.Serializable;
+import java.sql.Connection;
 
-public class CalculHetraMaison extends classMAPTable{
-    private String idMaison, nomMaison;
-    private double surface,coefficientRindrina,coefficientTafo,prixParM2,hetra;
+import bean.ClassMAPTable;
+
+public class CalculHetraMaison extends ClassMAPTable{
+    private String id_maison, nom_maison;
+    private double surface,coefficient_rindrina,coefficient_tafo,prix_par_m2,hetra;
 
     public CalculHetraMaison() {
-        // Default constructor
+        this.setNomTable("calcul_hetra_maison");
     }
 
     // Getters and Setters
-    public String getIdMaison() {
-        return idMaison;
+    public String getId_maison() {
+        return id_maison;
     }
 
-    public void setIdMaison(String idMaison) {
-        this.idMaison = idMaison;
+    public void setId_maison(String idMaison) {
+        this.id_maison = idMaison;
     }
 
-    public String getNomMaison() {
-        return nomMaison;
+    public String getNom_maison() {
+        return nom_maison;
     }
 
-    public void setNomMaison(String nomMaison) {
-        this.nomMaison = nomMaison;
+    public void setNom_maison(String nomMaison) {
+        this.nom_maison = nomMaison;
     }
 
     public double getSurface() {
@@ -35,28 +37,28 @@ public class CalculHetraMaison extends classMAPTable{
         this.surface = surface;
     }
 
-    public double getCoefficientRindrina() {
-        return coefficientRindrina;
+    public double getCoefficient_rindrina() {
+        return coefficient_rindrina;
     }
 
-    public void setCoefficientRindrina(double coefficientRindrina) {
-        this.coefficientRindrina = coefficientRindrina;
+    public void setCoefficient_rindrina(double coefficient_rindrina) {
+        this.coefficient_rindrina = coefficient_rindrina;
     }
 
-    public double getCoefficientTafo() {
-        return coefficientTafo;
+    public double getCoefficient_tafo() {
+        return coefficient_tafo;
     }
 
-    public void setCoefficientTafo(double coefficientTafo) {
-        this.coefficientTafo = coefficientTafo;
+    public void setCoefficient_tafo(double coefficient_tafo) {
+        this.coefficient_tafo = coefficient_tafo;
     }
 
-    public double getPrixParM2() {
-        return prixParM2;
+    public double getPrix_par_m2() {
+        return prix_par_m2;
     }
 
-    public void setPrixParM2(double prixParM2) {
-        this.prixParM2 = prixParM2;
+    public void setPrix_par_m2(double prix_par_m2) {
+        this.prix_par_m2 = prix_par_m2;
     }
 
     public double getHetra() {
@@ -66,4 +68,21 @@ public class CalculHetraMaison extends classMAPTable{
     public void setHetra(double hetra) {
         this.hetra = hetra;
     }
+
+    @Override
+    public void construirePK(Connection c) throws Exception {
+        this.preparePk("CHM", "seq_calculHetraMaison");
+        this.setId_maison(makePK(c));
+    }
+
+    @Override
+    public String getAttributIDName() {
+        return this.getId_maison();
+    }
+
+    @Override
+    public String getTuppleID() {
+        return "id_maison";
+    }
+
 }

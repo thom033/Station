@@ -1,114 +1,98 @@
-    <style>
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-        }
-        .btn:hover {
-            background-color: #45a049;
-        }
-    </style>
+<!DOCTYPE html>
+<html lang="en">
 
-    <%-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> --%>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une Maison</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        #map {
+            height: 100vh;
+            margin-bottom: 20px;
+        }
 
-    <style type="text/css">
-        #map { height:100vh; width: 100%}
+        .button-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
     </style>
-    <title>OpenStreetMap - Maisons</title>
-    <div id="map"></div>   
-    <button id="myBtn">Ouvrir le formulaire</button>
-    <div id="houseModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h5>Ajouter une Maison</h5>
-        <form id="houseForm">
-            <div class="form-group">
-                <label for="houseName">Nom:</label>
-                <input type="text" id="houseName" name="houseName" required>
-            </div>
-            <div class="form-group">
-                <label for="etage">Nb Etage:</label>
-                <input type="number" id="etage" name="etage">
-            </div>
-            <div class="form-group">
-                <label for="latitude">Latitude:</label>
-                <input type="text" id="latitude" name="latitude">
-            </div>
-            <div class="form-group">
-                <label for="longitude">Longitude:</label>
-                <input type="text" id="longitude" name="longitude">
-            </div>
-            <div class="form-group">
-                <label for="length">Longueur:</label>
-                <input type="number" id="length" name="length" required>
-            </div>
-            <div class="form-group">
-                <label for="width">Largeur:</label>
-                <input type="number" id="width" name="width" required>
-            </div>
-            <div class="form-group">
-                <label for="typeTafo">Type Tafo:</label>
-                <select id="typeTafo" name="typeTafo"></select>
-            </div>
-            <div class="form-group">
-                <label for="typeRindrina">Type Rindrina :</label>
-                <select id="typeRindrina" name="typeRindrina"></select>
-            </div>
-            <button type="button" class="btn" onclick="submitForm()">Soumettre</button>
-        </form>
+</head>
+
+<body>
+    <!-- Bouton pour voir la liste des arrondissements -->
+    <div class="button-container">
+        <button type="button" class="btn btn-primary" onclick="viewArrondissements()">Voir la liste des arrondissements</button>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div id="map"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="houseModal" tabindex="-1" aria-labelledby="houseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="houseModalLabel">Ajouter une Maison</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="houseForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="houseName" class="form-label">Nom</label>
+                                <input type="text" class="form-control" id="houseName" name="houseName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="etage" class="form-label">Nb Etage</label>
+                                <input type="number" class="form-control" id="etage" name="etage">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="length" class="form-label">Longueur</label>
+                                <input type="number" class="form-control" id="length" name="length" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="width" class="form-label">Largeur</label>
+                                <input type="number" class="form-control" id="width" name="width" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="latitude" class="form-label">Latitude</label>
+                                <input type="text" class="form-control" id="latitude" name="latitude" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="longitude" class="form-label">Longitude</label>
+                                <input type="text" class="form-control" id="longitude" name="longitude" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="typeTafo" class="form-label">Type Tafo</label>
+                                <select class="form-select" id="typeTafo" name="typeTafo">
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="typeRindrina" class="form-label">Type Rindrina</label>
+                                <select class="form-select" id="typeRindrina" name="typeRindrina">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary" onclick="submitForm()">Soumettre</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Initialiser la carte
         var map = L.map('map').setView([-18.8792, 47.5079], 13); // Antananarivo
@@ -119,29 +103,29 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Ajouter un événement de clic pour créer une maison
-        map.on('click', function(e) {
-            $('#latitude').val(e.latlng.lat);
-            $('#longitude').val(e.latlng.lng);
-            $('#houseModal').modal('show');
+        // Ajouter un événement de clic pour afficher les coordonnées dans les champs Latitude et Longitude
+        map.on('click', function (e) {
+            document.getElementById('latitude').value = e.latlng.lat.toFixed(6);
+            document.getElementById('longitude').value = e.latlng.lng.toFixed(6);
+            var modal = new bootstrap.Modal(document.getElementById('houseModal'));
+            modal.show();
         });
 
-        // Fonction pour soumettre le formulaire
+        // Soumettre le formulaire
         function submitForm() {
-            var houseData = {
-                nom: $('#houseName').val(),
-                longueur: $('#length').val(),
-                largeur: $('#width').val(),
-                typeTafo: $('#typeTafo').val(),
-                typeRindrina: $('#typeRindrina').val(),
-                latitude: $('#latitude').val(),
-                longitude: $('#longitude').val(),
-                nbrEtage: $('#etage').val()            
+            const houseData = {
+                nom: document.getElementById('houseName').value,
+                longueur: document.getElementById('length').value,
+                largeur: document.getElementById('width').value,
+                typeTafo: document.getElementById('typeTafo').value,
+                typeRindrina: document.getElementById('typeRindrina').value,
+                latitude: document.getElementById('latitude').value,
+                longitude: document.getElementById('longitude').value,
+                nbrEtage: document.getElementById('etage').value,
             };
 
             console.log("Données maison:", houseData);
 
-            // Simuler une requête (à adapter pour votre backend)
             fetch('http://localhost:8080/station/carte', {
                 method: 'POST',
                 headers: {
@@ -149,35 +133,23 @@
                 },
                 body: JSON.stringify(houseData)
             })
-            .then(response => {
-                if (response.ok) {
-                    alert('Maison ajoutée avec succès!');
-                    $('#houseModal').modal('hide');
-                } else {
-                    alert('Erreur lors de l\'ajout de la maison.');
-                }
-            })
-            .catch(error => console.error('Erreur:', error));
-        }
-
-        // Exemple de recherche
-        $('#searchBtn').click(function() {
-            var searchTerm = $('#searchInput').val();
-            console.log("Recherche pour:", searchTerm);
-
-            // Simuler une requête (à adapter)
-            fetch(`http://localhost:8080/searchMaison?name=${searchTerm}`)
-                .then(response => response.json())
-                .then(data => {
-                    $('#houseList').empty();
-                    data.forEach(function(house) {
-                        $('#houseList').append(`<div>${house.name} - (${house.latitude}, ${house.longitude})</div>`);
-                    });
+                .then(response => {
+                    if (response.ok) {
+                        alert('Maison ajoutée avec succès!');
+                        var modal = bootstrap.Modal.getInstance(document.getElementById('houseModal'));
+                        modal.hide();
+                    } else {
+                        alert('Erreur lors de l\'ajout de la maison.');
+                    }
                 })
                 .catch(error => console.error('Erreur:', error));
-        });
+        }
+
+        // Fonction pour afficher la liste des arrondissements
+        function viewArrondissements() {
+            alert("Affichage de la liste des arrondissements (fonctionnalité à implémenter).");
+        }
     </script>
-    <%-- script get data --%>
     <script>
         async function loadTypeData() {
             try {
@@ -220,4 +192,6 @@
         // Charger les données dès que la page est prête
         document.addEventListener('DOMContentLoaded', loadTypeData);
     </script>
+</body>
 
+</html>
