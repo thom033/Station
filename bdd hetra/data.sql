@@ -127,3 +127,41 @@ INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES
 INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('10', '10', 'Trano10', 47.60376, -18.491392);
 INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('11', '11', 'Trano11', 47.584534, -18.535692);
 INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('12', '12', 'Trano12', 47.727356, -18.521361);
+
+
+
+-- Insérer des données dans la table type_tafo
+INSERT INTO type_tafo (id_type_tafo, nom) VALUES ('1', 'Bozaka');
+INSERT INTO type_tafo (id_type_tafo, nom) VALUES ('2', 'Tuile');
+INSERT INTO type_tafo (id_type_tafo, nom) VALUES ('3', 'Tôle');
+INSERT INTO type_tafo (id_type_tafo, nom) VALUES ('4', 'Beton');
+
+-- Insérer des données dans la table type_rindrina
+INSERT INTO type_rindrina (id_type_rindrina, nom) VALUES ('1', 'Hazo');
+INSERT INTO type_rindrina (id_type_rindrina, nom) VALUES ('2', 'Brique');
+INSERT INTO type_rindrina (id_type_rindrina, nom) VALUES ('3', 'Beton');
+
+-- Insérer des données dans la table type_tafo_coefficient
+INSERT INTO type_tafo_coefficient (id_type_tafo, coefficient, dates) VALUES ('1', 0.6, TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO type_tafo_coefficient (id_type_tafo, coefficient, dates) VALUES ('2', 0.8, TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO type_tafo_coefficient (id_type_tafo, coefficient, dates) VALUES ('3', 1.1, TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO type_tafo_coefficient (id_type_tafo, coefficient, dates) VALUES ('4', 1.4, TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+
+-- Insérer des données dans la table type_rindrina_coefficient
+INSERT INTO type_rindrina_coefficient (id_type_rindrina, coefficient, dates) VALUES ('1', 0.8, TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO type_rindrina_coefficient (id_type_rindrina, coefficient, dates) VALUES ('2', 1.1, TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO type_rindrina_coefficient (id_type_rindrina, coefficient, dates) VALUES ('3', 1.2, TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+
+-- Insérer des données dans la table maison_details
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('1', '1', 400, 200, 2, '3', '3', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('2', '2', 150, 90, 1, '2', '2', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('3', '3', 600, 700, 3, '2', '1', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('4', '4', 300, 150, 1, '1', '3', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('5', '5', 540, 260, 2, '2', '2', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('6', '6', 470, 350, 3, '4', '1', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('7', '7', 220, 100, 1, '3', '2', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('8', '8', 600, 210, 2, '4', '1', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('9', '9', 500, 400, 3, '1', '3', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('10', '10', 250, 300, 4, '2', '3', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('11', '11', 260, 100, 3, '2', '1', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
+INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('12', '12', 255.5, 200, 2, '3', '2', TO_DATE('2025-01-01', 'YYYY-MM-DD'));
