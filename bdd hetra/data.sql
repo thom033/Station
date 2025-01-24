@@ -36,11 +36,7 @@ VALUES (
             47.558441, -18.848073, -- Point 5
             47.513123, -18.643793, -- Point 6
             47.194519, -18.563054, -- Point 7
-            47.5500, -18.9200, -- Point 8
-            47.5000, -18.9100, -- Point 9
-            47.4500, -18.9000, -- Point 10
-            47.4000, -18.9100, -- Point 11
-            47.4000, -18.9500  -- Retour au point 1 pour fermer le polygone
+            47.080536, -18.589103 -- Retour au point 1 pour fermer le polygone
         )
     )
 );
@@ -56,18 +52,18 @@ VALUES (
         NULL,
         SDO_ELEM_INFO_ARRAY(1, 1003, 1), -- Indique que c'est un polygone simple
         SDO_ORDINATE_ARRAY(
-            47.7000, -18.9500, -- Point 1
-            47.7500, -18.9600, -- Point 2
-            47.8000, -18.9700, -- Point 3
-            47.8500, -18.9600, -- Point 4
-            47.9000, -18.9500, -- Point 5
-            47.9500, -18.9400, -- Point 6
-            47.9000, -18.9300, -- Point 7
-            47.8500, -18.9200, -- Point 8
-            47.8000, -18.9100, -- Point 9
-            47.7500, -18.9000, -- Point 10
-            47.7000, -18.9100, -- Point 11
-            47.7000, -18.9500  -- Retour au point 1 pour fermer le polygone
+            47.794647, -18.714083, -- Point 1
+            47.794647, -18.776539, -- Point 2
+            47.849579, -18.842872, -- Point 3
+            47.900391, -18.89228, -- Point 4
+            48.010254, -18.958568, -- Point 5
+            48.132477, -18.776539, -- Point 6
+            48.253326, -18.655511, -- Point 7
+            48.212128, -18.539607, -- Point 8
+            48.063812, -18.482278, -- Point 9
+            47.897644, -18.466639, -- Point 10
+            47.922363, -18.496612, -- Point 11
+            47.794647, -18.714083  -- Retour au point 1 pour fermer le polygone
         )
     )
 );
@@ -84,22 +80,36 @@ VALUES (
         NULL,
         SDO_ELEM_INFO_ARRAY(1, 1003, 1), -- Indique que c'est un polygone simple
         SDO_ORDINATE_ARRAY(
-            47.3000, -18.8500, -- Point 1
-            47.3500, -18.8600, -- Point 2
-            47.4000, -18.8700, -- Point 3
-            47.4500, -18.8600, -- Point 4
-            47.5000, -18.8500, -- Point 5
-            47.5500, -18.8400, -- Point 6
-            47.5000, -18.8300, -- Point 7
-            47.4500, -18.8200, -- Point 8
-            47.4000, -18.8100, -- Point 9
-            47.3500, -18.8000, -- Point 10
-            47.3000, -18.8100, -- Point 11
-            47.3000, -18.8500  -- Retour au point 1 pour fermer le polygone
+            47.327728, -19.07807, -- Point 1
+            47.617493, -19.075472, -- Point 2
+            47.765808, -19.272739, -- Point 3
+            47.436218, -19.357025, -- Point 4
+            47.264557, -19.266254, -- Point 5
+            47.327728, -19.07807
         )
     )
 );
-
+-- Arrondissement 4
+INSERT INTO arrondissement (id_arrondissement, id_commune ,nom, geometry)
+VALUES (
+    'A4',
+    'C001',
+    'Arrondissement 4',
+    SDO_GEOMETRY(
+        2003, -- Type de géométrie : polygone
+        4326, -- SRID pour le système de coordonnées WGS 84
+        NULL,
+        SDO_ELEM_INFO_ARRAY(1, 1003, 1), -- Indique que c'est un polygone simple
+        SDO_ORDINATE_ARRAY(
+            47.463684, -18.377986, -- Point 1
+            47.590027, -18.691951,-- Point 2
+            47.82486, -18.552627, -- Point 3
+            47.627106 -18.552627, -- Point 4
+            47.264557, -18.329732, -- Point 5
+            47.463684, -18.377986
+        )
+    )
+);
 ---- Insérer des données dans la table proprietaire
 INSERT INTO proprietaire (id, nom) VALUES ('1', 'P1');
 INSERT INTO proprietaire (id, nom) VALUES ('2', 'P2');
