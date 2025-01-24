@@ -1,53 +1,95 @@
--- Insérer des données de référence dans la table type_tafo
-INSERT INTO type_tafo (id_type_tafo, nom, coefficient) VALUES (1, 'Tafo falafa', 1.0);
-INSERT INTO type_tafo (id_type_tafo, nom, coefficient) VALUES (2, 'Tafo tôle', 1.5);
-INSERT INTO type_tafo (id_type_tafo, nom, coefficient) VALUES (3, 'Tafo ravinala', 1.2);
+iNSERT INTO COMMUNE 
+VALUES (
+    'C001',
+    'CUA',
+    'Commune ANTANANARIVO'
+);
 
--- Insérer des données de référence dans la table type_rindrina
-INSERT INTO type_rindrina (id_type_rindrina, nom, coefficient) VALUES (1, 'Rindrina falafa', 1.0);
-INSERT INTO type_rindrina (id_type_rindrina, nom, coefficient) VALUES (2, 'Rindrina brique', 1.5);
-INSERT INTO type_rindrina (id_type_rindrina, nom, coefficient) VALUES (3, 'Rindrina bois', 1.2);
-INSERT INTO type_rindrina (id_type_rindrina, nom, coefficient) VALUES (4, 'Rindrina beton', 2.0);
+INSERT INTO COMMUNE 
+VALUES (
+    'C002',
+    'CUB',
+    'Commune ANTSIRABE'
+);
 
-----------------------------------
---donnee test chat
+INSERT INTO arrondissement (id_arrondissement,ID_commune ,nom, geometry)
+VALUES (
+    'A1',
+    'C001',
+    'Arrondissement 1',
+    SDO_GEOMETRY(
+        2003, -- Type de géométrie : polygone
+        4326, -- SRID pour le système de coordonnées WGS 84
+        NULL,
+        SDO_ELEM_INFO_ARRAY(1, 1003, 1), -- Indique que c'est un polygone simple
+        SDO_ORDINATE_ARRAY(
+            47.0805636, -18.589103, -- Point 1
+            46.796265, -18.840271, -- Point 2
+            46.918488, -18.99235, -- Point 3
+            47.176666, -19.028725, -- Point 4
+            47.558441, -18.848073, -- Point 5
+            47.513123, -18.643793, -- Point 6
+            47.194519, -18.563054, -- Point 7
+            47.5500, -18.9200, -- Point 8
+            47.5000, -18.9100, -- Point 9
+            47.4500, -18.9000, -- Point 10
+            47.4000, -18.9100, -- Point 11
+            47.4000, -18.9500  -- Retour au point 1 pour fermer le polygone
+        )
+    )
+);
 
--- Insérer des données de test pour arrondissement
-INSERT INTO arrondissement (id_arrondissement, nom) VALUES ('1', 'Arrondissement 1');
-INSERT INTO arrondissement (id_arrondissement, nom) VALUES ('2', 'Arrondissement 2');
+INSERT INTO arrondissement (id_arrondissement, ID_commune,nom, geometry)
+VALUES (
+    'A2',
+    'C001',
+    'Arrondissement 2',
+    SDO_GEOMETRY(
+        2003, -- Type de géométrie : polygone
+        4326, -- SRID pour le système de coordonnées WGS 84
+        NULL,
+        SDO_ELEM_INFO_ARRAY(1, 1003, 1), -- Indique que c'est un polygone simple
+        SDO_ORDINATE_ARRAY(
+            47.7000, -18.9500, -- Point 1
+            47.7500, -18.9600, -- Point 2
+            47.8000, -18.9700, -- Point 3
+            47.8500, -18.9600, -- Point 4
+            47.9000, -18.9500, -- Point 5
+            47.9500, -18.9400, -- Point 6
+            47.9000, -18.9300, -- Point 7
+            47.8500, -18.9200, -- Point 8
+            47.8000, -18.9100, -- Point 9
+            47.7500, -18.9000, -- Point 10
+            47.7000, -18.9100, -- Point 11
+            47.7000, -18.9500  -- Retour au point 1 pour fermer le polygone
+        )
+    )
+);
 
--- Insérer des données de test pour arrondissement_position
-INSERT INTO arrondissement_position (id_arrondissement, position) VALUES ('1', SDO_GEOMETRY(2003, NULL, NULL, SDO_ELEM_INFO_ARRAY(1,1003,3), SDO_ORDINATE_ARRAY(0,0, 10,0, 10,10, 0,10, 0,0)));
-INSERT INTO arrondissement_position (id_arrondissement, position) VALUES ('2', SDO_GEOMETRY(2003, NULL, NULL, SDO_ELEM_INFO_ARRAY(1,1003,3), SDO_ORDINATE_ARRAY(20,20, 30,20, 30,30, 20,30, 20,20)));
-
--- Insérer des données de test pour maison
-INSERT INTO maison (id, nom, longeur, largeur, nbr_etage, position) VALUES ('1', 'Maison 1', 10, 10, 2, SDO_GEOMETRY(2001, NULL, SDO_POINT_TYPE(5, 5, NULL), NULL, NULL));
-INSERT INTO maison (id, nom, longeur, largeur, nbr_etage, position) VALUES ('2', 'Maison 2', 15, 15, 3, SDO_GEOMETRY(2001, NULL, SDO_POINT_TYPE(25, 25, NULL), NULL, NULL));
-
--- Insérer des données de test pour type_rindrina
-INSERT INTO type_rindrina (id_type_rindrina, nom, coefficient) VALUES ('1', 'Type Rindrina 1', 1.2);
-INSERT INTO type_rindrina (id_type_rindrina, nom, coefficient) VALUES ('2', 'Type Rindrina 2', 1.5);
-
--- Insérer des données de test pour type_tafo
-INSERT INTO type_tafo (id_type_tafo, nom, coefficient) VALUES ('1', 'Type Tafo 1', 1.1);
-INSERT INTO type_tafo (id_type_tafo, nom, coefficient) VALUES ('2', 'Type Tafo 2', 1.3);
-
--- Insérer des données de test pour maison_detaills
-INSERT INTO maison_detaills (id_maison_detaills, id_maison, id_type_rindrina, id_type_tafo) VALUES ('1', '1', '1', '1');
-INSERT INTO maison_detaills (id_maison_detaills, id_maison, id_type_rindrina, id_type_tafo) VALUES ('2', '2', '2', '2');
-
--- Insérer des données de test pour hetra
-INSERT INTO hetra (id_hetra, prix) VALUES ('1', 100);
-
-----------------------------------------------
-INSERT INTO paiement (id, id_maison, mois, annee, date_paiement) VALUES ('1', '1', 1, 2023, TO_DATE('2023-01-15', 'YYYY-MM-DD'));
-INSERT INTO paiement (id, id_maison, mois, annee, date_paiement) VALUES ('2', '1', 2, 2023, TO_DATE('2023-02-15', 'YYYY-MM-DD'));
-INSERT INTO paiement (id, id_maison, mois, annee, date_paiement) VALUES ('3', '1', 3, 2023, TO_DATE('2023-03-15', 'YYYY-MM-DD'));
-INSERT INTO paiement (id, id_maison, mois, annee, date_paiement) VALUES ('4', '1', 4, 2023, TO_DATE('2023-04-15', 'YYYY-MM-DD'));
-INSERT INTO paiement (id, id_maison, mois, annee, date_paiement) VALUES ('5', '1', 5, 2023, TO_DATE('2023-05-15', 'YYYY-MM-DD'));
-
-INSERT INTO paiement (id, id_maison, mois, annee, date_paiement) VALUES ('6', '2', 1, 2023, TO_DATE('2023-01-20', 'YYYY-MM-DD'));
-INSERT INTO paiement (id, id_maison, mois, annee, date_paiement) VALUES ('7', '2', 2, 2023, TO_DATE('2023-02-20', 'YYYY-MM-DD'));
-INSERT INTO paiement (id, id_maison, mois, annee, date_paiement) VALUES ('8', '2', 3, 2023, TO_DATE('2023-03-20', 'YYYY-MM-DD'));
-INSERT INTO paiement (id, id_maison, mois, annee, date_paiement) VALUES ('9', '2', 4, 2023, TO_DATE('2023-04-20', 'YYYY-MM-DD'));
-INSERT INTO paiement (id, id_maison, mois, annee, date_paiement) VALUES ('10', '2', 5, 2023, TO_DATE('2023-05-20', 'YYYY-MM-DD'));
+-- Arrondissement 3
+INSERT INTO arrondissement (id_arrondissement, id_commune ,nom, geometry)
+VALUES (
+    'A3',
+    'C001',
+    'Arrondissement 3',
+    SDO_GEOMETRY(
+        2003, -- Type de géométrie : polygone
+        4326, -- SRID pour le système de coordonnées WGS 84
+        NULL,
+        SDO_ELEM_INFO_ARRAY(1, 1003, 1), -- Indique que c'est un polygone simple
+        SDO_ORDINATE_ARRAY(
+            47.3000, -18.8500, -- Point 1
+            47.3500, -18.8600, -- Point 2
+            47.4000, -18.8700, -- Point 3
+            47.4500, -18.8600, -- Point 4
+            47.5000, -18.8500, -- Point 5
+            47.5500, -18.8400, -- Point 6
+            47.5000, -18.8300, -- Point 7
+            47.4500, -18.8200, -- Point 8
+            47.4000, -18.8100, -- Point 9
+            47.3500, -18.8000, -- Point 10
+            47.3000, -18.8100, -- Point 11
+            47.3000, -18.8500  -- Retour au point 1 pour fermer le polygone
+        )
+    )
+);
