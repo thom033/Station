@@ -1,3 +1,9 @@
+insert into roles values ('commune', ' commune', 6);
+
+insert  into mpiasa values (880681, 'C001');
+
+insert into prix_impot  values (1,'C001',100, 1, 2025);
+
 iNSERT INTO COMMUNE 
 VALUES (
     'C001',
