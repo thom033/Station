@@ -1,6 +1,21 @@
-
-INSERT INTO arrondissement (nom, geometry)
+iNSERT INTO COMMUNE 
 VALUES (
+    'C001',
+    'CUA',
+    'Commune ANTANANARIVO'
+);
+
+INSERT INTO COMMUNE 
+VALUES (
+    'C002',
+    'CUB',
+    'Commune ANTSIRABE'
+);
+
+INSERT INTO arrondissement (id_arrondissement,ID_commune ,nom, geometry)
+VALUES (
+    'A1',
+    'C001',
     'Arrondissement 1',
     SDO_GEOMETRY(
         2003, -- Type de géométrie : polygone
@@ -24,8 +39,10 @@ VALUES (
     )
 );
 
-INSERT INTO arrondissement (nom, geometry)
+INSERT INTO arrondissement (id_arrondissement, ID_commune,nom, geometry)
 VALUES (
+    'A2',
+    'C001',
     'Arrondissement 2',
     SDO_GEOMETRY(
         2003, -- Type de géométrie : polygone
@@ -50,8 +67,10 @@ VALUES (
 );
 
 -- Arrondissement 3
-INSERT INTO arrondissement (nom, geometry)
+INSERT INTO arrondissement (id_arrondissement, id_commune ,nom, geometry)
 VALUES (
+    'A3',
+    'C001',
     'Arrondissement 3',
     SDO_GEOMETRY(
         2003, -- Type de géométrie : polygone
@@ -71,48 +90,6 @@ VALUES (
             47.3500, -18.8000, -- Point 10
             47.3000, -18.8100, -- Point 11
             47.3000, -18.8500  -- Retour au point 1 pour fermer le polygone
-        )
-    )
-);
-
-iNSERT INTO COMMUNE (ID, NOM, ZONE)
-VALUES (
-    1,
-    'Commune ANTANANARIVO',
-    SDO_GEOMETRY(2003, 4326, NULL,
-        SDO_ELEM_INFO_ARRAY(1, 1003, 1),
-        SDO_ORDINATE_ARRAY(
-            46.66992188, -18.77891637,
-            46.91162109, -18.53690856,
-            47.22473145, -18.47960906,
-            47.50488281, -18.21369822, 
-            47.85644531, -18.26065336,
-            48.41674805, -18.59418886,
-            48.23547363, -18.92707243,
-            47.97180176, -19.19705344,
-            47.76306152, -19.41479244,
-            47.36755371, -19.461413,
-            47.12585449, -19.2644798,
-            46.76879883, -19.04654131,
-            46.66992188, -18.77891637
-        )
-    )
-);
-
-INSERT INTO COMMUNE (ID, NOM, ZONE)
-VALUES (
-    2,
-    'Commune ANTSIRABE',
-    SDO_GEOMETRY(2003, 4326, NULL,
-        SDO_ELEM_INFO_ARRAY(1, 1003, 1),
-        SDO_ORDINATE_ARRAY(
-            46.70837402, -19.4717713,
-            47.52685547, -19.53390722,
-            47.4005127, -19.83389278, 
-            47.14782715, -20.05593127,
-            46.73583984, -19.95785975, 
-            46.42272949, -19.58049348, 
-            46.70837402, -19.4717713  
         )
     )
 );
