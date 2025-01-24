@@ -73,8 +73,10 @@
         session.setAttribute("lien", lien);
         String menu = "admin.jsp";
         session.setAttribute("menu", menu);
-        Mpiasa p = new Mpiasa(ut);
-        session.setAttribute("mpiasa",p);
+        if(ut.getIdrole().equalsIgnoreCase("commune") ){
+            Mpiasa p = new Mpiasa(ut);
+            session.setAttribute("mpiasa",p);
+        }
         out.println("<script language='JavaScript'> document.location.replace('" + lien + "?" + queryString + "');</script>");
         
     } catch (Exception e) {
