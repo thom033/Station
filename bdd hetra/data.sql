@@ -99,3 +99,31 @@ VALUES (
         )
     )
 );
+
+---- Insérer des données dans la table proprietaire
+INSERT INTO proprietaire (id, nom) VALUES ('1', 'P1');
+INSERT INTO proprietaire (id, nom) VALUES ('2', 'P2');
+INSERT INTO proprietaire (id, nom) VALUES ('3', 'P3');
+INSERT INTO proprietaire (id, nom) VALUES ('4', 'P4');
+INSERT INTO proprietaire (id, nom) VALUES ('5', 'P5');
+INSERT INTO proprietaire (id, nom) VALUES ('6', 'P6');
+INSERT INTO proprietaire (id, nom) VALUES ('7', 'P7');
+INSERT INTO proprietaire (id, nom) VALUES ('8', 'P8');
+INSERT INTO proprietaire (id, nom) VALUES ('9', 'P9');
+INSERT INTO proprietaire (id, nom) VALUES ('10', 'P10');
+INSERT INTO proprietaire (id, nom) VALUES ('11', 'P11');
+INSERT INTO proprietaire (id, nom) VALUES ('12', 'P12');
+
+-- Insérer des données dans la table maison
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('1', '1', 'Trano1', 46.984406, -18.868592);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('2', '2', 'Trano2', 47.308502, -18.807757);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('3', '3', 'Trano3', 47.223358, -18.759544);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('4', '4', 'Trano4', 47.985535, -18.63468);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('5', '5', 'Trano5', 48.002014, -18.755723);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('6', '6', 'Trano6', 47.960815, -18.802319);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('7', '7', 'Trano7', 47.562561, -19.176731);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('8', '8', 'Trano8', 47.643585, -19.235121);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('9', '9', 'Trano9', 47.392273, -19.180624);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('10', '10', 'Trano10', 47.60376, -18.491392);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('11', '11', 'Trano11', 47.584534, -18.535692);
+INSERT INTO maison (id_maison, id_proprietaire, nom, longitude, latitude) VALUES ('12', '12', 'Trano12', 47.727356, -18.521361);
