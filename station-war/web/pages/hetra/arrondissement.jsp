@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste arrondissement</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-5">
+
+    <div class="content-wrapper" >
         <h2 class="mb-4">Liste des Arrondissements</h2>
         
         <!-- Formulaire de filtre par année -->
         <form class="form-inline mb-4">
-            <label class="mr-2" for="yearFilter">Filtrer par année:</label>
+            <label class="mr-2" for="yearFilter">Filtrer par annee:</label>
             <select class="form-control mr-2" id="yearFilter" name="year">
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>
@@ -28,24 +19,19 @@
                 <tr>
                     <th scope="col">Arrondissement</th>
                     <th scope="col">Total Payer</th>
-                    <th scope="col">Total Non Payé</th>
+                    <th scope="col">Total Non Paye</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="arrondissement" items="${arrondissements}">
+
+                <%-- <c:forEach var="arrondissement" items="${arrondissements}">
                     <tr>
                         <td>${arrondissement.nom}</td>
                         <td>${arrondissement.total_paye}</td>
                         <td>${arrondissement.total_rest</td>
                     </tr>
-                </c:forEach>
+                </c:forEach> --%>
             </tbody>
         </table>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
