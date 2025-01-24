@@ -59,11 +59,13 @@ CREATE TABLE maison_details (
     nb_etages NUMBER NOT NULL, 
     id_type_tafo VARCHAR2(50) NOT NULL,
     id_type_rindrina VARCHAR2(50) NOT NULL,
+    dates date not null,
     PRIMARY KEY (id_maison_details),                          
     FOREIGN KEY (id_maison) REFERENCES maison(id_maison),
     FOREIGN KEY (id_type_tafo) REFERENCES type_tafo(id_type_tafo),
     FOREIGN KEY (id_type_rindrina) REFERENCES type_rindrina(id_type_rindrina)
 );
+alter TABLE maison_details  add dates date not null;
 
 -- ##### Création de la table type_tafo_coefficient #####
 CREATE TABLE type_tafo_coefficient (
