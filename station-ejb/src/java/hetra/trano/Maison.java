@@ -78,27 +78,14 @@ public class Maison extends ClassMere {
 
     @Override
     public int insertToTable() throws Exception {
-        String sql = "INSERT INTO maison (id_maison, nom,  position) " +
-        "VALUES (?, ?, ?, ?, ?, SDO_GEOMETRY(2001, 4326, SDO_POINT_TYPE(?, ?, NULL), NULL, NULL))";
-        try (Connection c = new UtilDB().GetConn();
-            PreparedStatement statement = c.prepareStatement(sql)) {
+        try (Connection c = new UtilDB().GetConn()) {
                 this.construirePK(c);
 
-            // Paramètres de la requête
-            statement.setString(1, this.getId_maison());
-            statement.setString(2, this.getNom());
-            statement.setDouble(3, this.getLatitude()); // Latitude
-            statement.setDouble(4, this.getLongitude()); // Longitude
-            // Exécution de la requête
-            int rowsInserted = statement.executeUpdate();
+            this.insertToTable(c);
 
             // this.getDetails().setId_maison(this.getId());
             // this.getDetails().insertToTable(c);
-
-            if (rowsInserted > 0) {
-                System.out.println("Insertion réussie dans la table `maison`.");
-            }
-            return rowsInserted;
+            return 1;
         } catch (Exception e) {
             throw e;
         }
@@ -125,7 +112,7 @@ public class Maison extends ClassMere {
         return maisons;
     }
     public double totalCoef() {
-        return this.getDetails().getTypeRindrina().getCoefficient() * this.getDetails().getTypeTafo().getCoefficient();
+        return this.getDetails().getTypeRindrina().getCoefficient()*this.getDetails().getTypeTafo().getCoefficient();
     }
     public double totalSurface() {
         return this.getDetails().getLargeur() * this.getDetails().getLongueur() * this.getDetails().getNbr_etages();
@@ -141,8 +128,8 @@ public class Maison extends ClassMere {
         TypeTafo tafo = new TypeTafo();
         tafo.getById(details.getId_type_tafo(), "1", connection);
 
-        details.setTypeRindrina(rindrina);
-        details.setTypeTafo(tafo);
+        // details.setTypeRindrina(rindrina);
+        // details.setTypeTafo(tafo);
 
         return details;
     }
