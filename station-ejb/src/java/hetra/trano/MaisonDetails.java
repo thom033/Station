@@ -11,7 +11,7 @@ public class MaisonDetails extends ClassMAPTable {
     TypeRindrina typeRindrina;
     TypeTafo typeTafo;
     public TypeRindrina getTypeRindrina() {
-        return typeRindrina;
+        return this.typeRindrina;
     }
 
     public void setTypeRindrina(TypeRindrina typeRindrina) {
@@ -19,7 +19,7 @@ public class MaisonDetails extends ClassMAPTable {
     }
 
     public TypeTafo getTypeTafo() {
-        return typeTafo;
+        return this.typeTafo;
     }
 
     public void setTypeTafo(TypeTafo typeTafo) {
@@ -27,7 +27,7 @@ public class MaisonDetails extends ClassMAPTable {
     }
 
     public int getLargeur() {
-        return largeur;
+        return this.largeur;
     }
 
     public void setLargeur(int largeur) {
@@ -35,7 +35,7 @@ public class MaisonDetails extends ClassMAPTable {
     }
 
     public int getLongueur() {
-        return longueur;
+        return this.longueur;
     }
 
     public void setLongueur(int longueur) {
@@ -43,7 +43,7 @@ public class MaisonDetails extends ClassMAPTable {
     }
 
     public int getNbr_etages() {
-        return nbr_etages;
+        return this.nbr_etages;
     }
 
     public void setNbr_etages(int nbr_etage) {
@@ -51,7 +51,7 @@ public class MaisonDetails extends ClassMAPTable {
     }
     
     public String getId_type_tafo() {
-        return id_type_tafo;
+        return this.id_type_tafo;
     }
 
     public void setId_type_tafo(String id_type_tafo) {
@@ -59,7 +59,7 @@ public class MaisonDetails extends ClassMAPTable {
     }
 
     public String getId_type_rindrina() {
-        return id_type_rindrina;
+        return this.id_type_rindrina;
     }
 
     public void setId_type_rindrina(String id_type_rindrina) {
@@ -67,7 +67,7 @@ public class MaisonDetails extends ClassMAPTable {
     }
 
     public String getId_maison_detaills() {
-        return id_maison_detaills;
+        return this.id_maison_detaills;
     }
 
     public void setId_maison_detaills(String id_maison_detaills) {
@@ -75,7 +75,7 @@ public class MaisonDetails extends ClassMAPTable {
     }
 
     public String getId_maison() {
-        return id_maison;
+        return this.id_maison;
     }
 
     public void setId_maison(String id_maison) {
