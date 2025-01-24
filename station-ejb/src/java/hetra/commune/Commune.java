@@ -1,14 +1,15 @@
 package hetra.commune;
 
 import bean.ClassMAPTable;
+import hetra.trano.Maison;
 
 public class Commune extends ClassMAPTable {
     String id_commune, nom;
-    Mainson[] maisons;
-    public Mainson[] getMaisons() {
+    Maison[] maisons; 
+    public Maison[] getMaisons() {
         return maisons;
     }
-    public void setMaisons(Mainson[] maisons) {
+    public void setMaisons(Maison[] maisons) {
         this.maisons = maisons;
     }
     public String getId_commune() {
