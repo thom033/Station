@@ -8,7 +8,7 @@ import bean.ClassMAPTable;
 
 public class TypeTafo extends ClassMAPTable{
     String id_type_tafo,nom;
-    int coefficient;
+    double coefficient;
 
     public String getId_type_tafo() {
         return id_type_tafo;
@@ -26,11 +26,11 @@ public class TypeTafo extends ClassMAPTable{
         this.nom = nom;
     }
 
-    public int getCoefficient() {
+    public double getCoefficient() {
         return coefficient;
     }
 
-    public void setCoefficient(int coefficient) {
+    public void setCoefficient(double coefficient) {
         this.coefficient = coefficient;
     }
 
