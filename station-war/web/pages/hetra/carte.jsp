@@ -1,32 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter une Maison</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <style>
-        #map {
-            height: 800px;
-            margin-bottom: 20px;
-        }
-
-        .button-container {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Bouton pour voir la liste des arrondissements -->
-    <div class="button-container">
-        <a href="arrondissement" class="btn btn-primary">Voir la liste des arrondissements</a>
-    </div>
+    <div class="content-wrapper" >
 
     <!-- Carte -->
     <div id="map"></div>
@@ -88,6 +60,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -188,6 +161,4 @@
                 .catch(error => console.error('Erreur :', error));
         }
     </script>
-</body>
 
-</html>
