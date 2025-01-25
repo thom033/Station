@@ -19,6 +19,27 @@ public class Maison extends ClassMere {
 
     MaisonDetails details;
 
+    //constructeur
+    public Maison() {
+    }
+
+    // Maison m = new Maison(nom, longueur, largeur, nbrEtage, latitude, longitude);
+    public Maison(String nom, int longueur, int largeur, int nbr_etages, double latitude, double longitude) {
+        this.nom = nom;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.details = new MaisonDetails(longueur, largeur, nbr_etages);
+    }
+
+
+    public Maison(String id_maison, String id_proprietaire, String nom, double latitude, double longitude) {
+        this.id_maison = id_maison;
+        this.id_proprietaire = id_proprietaire;
+        this.nom = nom;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public void setDetails(MaisonDetails details) {
         this.details = details;
     }
