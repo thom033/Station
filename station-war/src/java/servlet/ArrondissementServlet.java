@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.CGenUtil;
-import hetra.carte.Arrondissement;
+import hetra.commune.Arrondissement;
 
 @WebServlet("/arrondissement")
 public class ArrondissementServlet extends HttpServlet {
