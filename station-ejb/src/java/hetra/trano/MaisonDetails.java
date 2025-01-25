@@ -10,6 +10,14 @@ public class MaisonDetails extends ClassMAPTable {
     int largeur, longueur, nbr_etages;
     TypeRindrina typeRindrina;
     TypeTafo typeTafo;
+
+    public MaisonDetails(int longueur, int largeur, int nbr_etages) {
+        this();
+        this.largeur = largeur;
+        this.longueur = longueur;
+        this.nbr_etages = nbr_etages;
+    }
+    
     public TypeRindrina getTypeRindrina() {
         return this.typeRindrina;
     }
