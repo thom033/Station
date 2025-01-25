@@ -21,6 +21,7 @@ public class Maison extends ClassMere {
 
     //constructeur
     public Maison() {
+        this.setNomTable("maison");
     }
 
     // Maison m = new Maison(nom, longueur, largeur, nbrEtage, latitude, longitude);
@@ -96,6 +97,12 @@ public class Maison extends ClassMere {
         return "id_maison";
     }
 
+    @Override
+    public void construirePK(Connection c) throws Exception {
+        this.preparePk("MN", "seq_maison");
+        this.setId_maison(makePK(c));
+    }
+
 
     @Override
     public int insertToTable() throws Exception {
@@ -114,13 +121,13 @@ public class Maison extends ClassMere {
 
     public static List<Maison> getAllMaison(Connection connection) throws Exception {
         List<Maison> maisons = new ArrayList<>();
-        String sql = "SELECT id, nom, latitude, longitude FROM maison";
+        String sql = "SELECT id_maison, nom, latitude, longitude FROM maison";
         try (PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
     
             while (resultSet.next()) {
                 Maison maison = new Maison();
-                maison.setId_maison(resultSet.getString("id"));
+                maison.setId_maison(resultSet.getString("id_maison"));
                 maison.setNom(resultSet.getString("nom"));
                 maison.setLatitude(resultSet.getDouble("latitude"));  // Récupère la latitude
                 maison.setLongitude(resultSet.getDouble("longitude")); // Récupère la longitude                
