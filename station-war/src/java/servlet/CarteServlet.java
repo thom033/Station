@@ -44,8 +44,8 @@ public class CarteServlet  extends HttpServlet{
 
             // Récupérer les valeurs
             String nom = (String) data.get("nom");
-            double longueur = Double.parseDouble(data.get("longueur").toString());
-            double largeur = Double.parseDouble(data.get("largeur").toString());
+            int longueur = Integer.parseInt(data.get("longueur").toString());
+            int largeur = Integer.parseInt(data.get("largeur").toString());
             int nbrEtage = Integer.parseInt( data.get("nbrEtage").toString());
             double latitude = Double.parseDouble( data.get("latitude").toString());
             double longitude = Double.parseDouble( data.get("longitude").toString());
