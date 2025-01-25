@@ -154,6 +154,8 @@ INSERT INTO type_rindrina_coefficient (id_type_rindrina, coefficient, dates) VAL
 INSERT INTO type_rindrina_coefficient (id_type_rindrina, coefficient, dates) VALUES ('2', 1.1, TO_DATE('2024-01-01', 'YYYY-MM-DD'));
 INSERT INTO type_rindrina_coefficient (id_type_rindrina, coefficient, dates) VALUES ('3', 1.2, TO_DATE('2024-01-01', 'YYYY-MM-DD'));
 
+alter TABLE maison_details  add dates date not null;
+
 -- Insérer des données dans la table maison_details
 INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('1', '1', 400, 200, 2, '3', '3', TO_DATE('2024-01-01', 'YYYY-MM-DD'));
 INSERT INTO maison_details (id_maison_details, id_maison, longueur, largeur, nb_etages, id_type_tafo, id_type_rindrina, dates) VALUES ('2', '2', 150, 90, 1, '2', '2', TO_DATE('2024-01-01', 'YYYY-MM-DD'));
