@@ -38,6 +38,21 @@ CREATE TABLE maison (
     latitude NUMBER NOT NULL,
     FOREIGN KEY (id_proprietaire) REFERENCES proprietaire(id) 
 );
+-- ##### Création de la séquence pour la table maison #####
+CREATE SEQUENCE seq_maison
+START WITH 1
+INCREMENT BY 1
+NOCACHE
+NOCYCLE;
+
+-- Utilisation de la séquence dans la table maison
+CREATE OR REPLACE TRIGGER maison_before_insert
+BEFORE INSERT ON maison
+FOR EACH ROW
+BEGIN
+    SELECT maison_seq.NEXTVAL INTO :NEW.id_maison FROM dual;
+END;
+
 -- ##### Création de la table type_tafo #####
 CREATE TABLE type_tafo (
     id_type_tafo VARCHAR2(50) PRIMARY KEY,
